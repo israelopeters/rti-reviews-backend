@@ -1,8 +1,7 @@
 package com.israelopeters.rtireviews.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -12,6 +11,8 @@ import java.util.List;
 @Entity(name = "Users")
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 public class User implements Serializable {
 
     @Id
