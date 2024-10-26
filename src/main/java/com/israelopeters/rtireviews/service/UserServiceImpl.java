@@ -58,7 +58,8 @@ public class UserServiceImpl implements UserService {
         return userDto;
     }
 
-    private Role assignAdmin() {
+    @Override
+    public Role assignAdmin() {
         Role role = new Role();
         role.setName("ADMIN");
         return roleRepository.save(role);
