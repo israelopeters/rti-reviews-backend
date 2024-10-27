@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Role assignAdmin() {
         Role role = new Role();
-        role.setName("ADMIN");
+        role.setName("USER");
         return roleRepository.save(role);
     }
 }
