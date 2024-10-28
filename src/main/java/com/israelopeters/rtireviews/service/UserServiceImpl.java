@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         Role role = new Role();
         if (role == null) {
-            role = assignAdmin();
+            role = assignUser();
         }
         user.setRoles(List.of(role));
         return userRepository.save(user);
@@ -58,8 +58,7 @@ public class UserServiceImpl implements UserService {
         return userDto;
     }
 
-    @Override
-    public Role assignAdmin() {
+    private Role assignUser() {
         Role role = new Role();
         role.setName("USER");
         return roleRepository.save(role);

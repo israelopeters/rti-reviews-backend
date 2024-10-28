@@ -9,5 +9,4 @@ public interface UserService {
     List<User> getAllUsers();
     User getUserByEmail(String email);
     User addUser(User user);
-    Role assignAdmin();
 }
