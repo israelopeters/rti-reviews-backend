@@ -40,14 +40,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addUser(User user) {
+    public User addUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         Role role = new Role();
         if (role == null) {
             role = assignAdmin();
         }
         user.setRoles(List.of(role));
-        userRepository.save(user);
+        return userRepository.save(user);
     }
 
     private UserDto mapToUserDto(User user) {
