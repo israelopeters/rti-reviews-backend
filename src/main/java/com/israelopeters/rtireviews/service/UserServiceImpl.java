@@ -5,6 +5,8 @@ import com.israelopeters.rtireviews.model.Role;
 import com.israelopeters.rtireviews.model.User;
 import com.israelopeters.rtireviews.repository.RoleRepository;
 import com.israelopeters.rtireviews.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -14,19 +16,13 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
 
-    private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
-    private final PasswordEncoder passwordEncoder;
+    @Autowired
+    UserRepository userRepository;
 
-    public UserServiceImpl(
-            UserRepository userRepository,
-            RoleRepository roleRepository,
-            PasswordEncoder passwordEncoder
-    ) {
-        this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
+    @Autowired
+    RoleRepository roleRepository;
+
+    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Override
     public List<User> getAllUsers() {
