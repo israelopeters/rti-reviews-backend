@@ -25,7 +25,6 @@ public class User implements Serializable {
     @Column(nullable = false)
     private String lastName;
 
-    @Column(nullable = false)
     private String country;
 
     private String bio;
@@ -36,7 +35,6 @@ public class User implements Serializable {
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
     private LocalDate dateCreated;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
