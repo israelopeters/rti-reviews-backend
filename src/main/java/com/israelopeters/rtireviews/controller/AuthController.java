@@ -5,6 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+// Controller for Spring MVC test purposes
+
 @Controller
 public class AuthController {
 
@@ -16,7 +18,9 @@ public class AuthController {
     @GetMapping("/signup")
     public String showSignupForm(Model model) {
         UserDto user = new UserDto();
-        model.addAttribute("user", user);
+        model.addAttribute("userForSignup", user);
         return "signup";
     }
+
+
 }

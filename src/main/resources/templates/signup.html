@@ -8,22 +8,25 @@
         <div th:if="${param.success}">
             Account created successfully.
         </div>
-        <form th:action="@{/signup}" method="post">
+
+        <form th:action="@{/signup/save}"
+              method="post"
+              th:object="userForSignup">
             <p>
                 <label>First Name: </label>
-                <input type="text" name="firstname" />
+                <input type="text" id="firstName" name="firstName" />
             </p>
             <p>
                 <label>Last Name: </label>
-                <input type="text" name="lastname" />
+                <input type="text" id="lastName" name="lastName" />
             </p>
             <p>
                 <label>Email: </label>
-                <input type="email" name="email" />
+                <input type="email" id="email" name="email" />
             </p>
             <p>
                 <label>Password: </label>
-                <input type="password" name="password" >
+                <input type="password" id="password" name="password" >
             </p>
 
             <p class="button">
