@@ -31,8 +31,8 @@ public class AuthController {
         return "signup";
     }
 
-    @PostMapping("/signup/create")
-    public String signup(@Valid @ModelAttribute("userForDto") User user, BindingResult bindingResult, Model model) {
+    @PostMapping("/signup/save")
+    public String signup(@Valid @ModelAttribute("userForSignup") User user, BindingResult bindingResult, Model model) {
         if(isUserExists(user)) {
             bindingResult.rejectValue(
                     "email", "", "This email is already registered to a user.");
