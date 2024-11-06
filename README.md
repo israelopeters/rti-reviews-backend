@@ -2,7 +2,7 @@
 Backend API service to power the RTI Reviews Android app
 
 # RTI Reviews App backend
-The Android app lets users keep and share their book reviews. A user can post a review, view all the reviews on the app, filter reviews by book genre, and like and comment on other users' reviews. A user can delete their own posted reviews. This documentation is for the backend API that will serve the Android application.
+The Android app lets users keep and share their book reviews. A user can post a review, view all the reviews on the app, filter reviews by book genre, and like and comment on other users' reviews. Also, a user can delete their own posted reviews. This documentation is for the backend API that will serve the Android application.
 
 ## Getting Started
 
@@ -38,7 +38,8 @@ Coming soon
 
 ## Built With
 
-* [Spring Boot](https://spring.io/projects/spring-boot) - The Java framework used
+* [Spring Boot](https://spring.io/projects/spring-boot) - Java framework used
+* [Spring Security](https://spring.io/projects/spring-security) - Java-based authentication and authorization framework used
 * [Maven](https://maven.apache.org/) - Dependency Management
 * [Docker](https://www.docker.com/) - Used to containerize the application for cloud deployment
 * [AWS RDS](https://aws.amazon.com/rds/) - Used to persist the database on the cloud
