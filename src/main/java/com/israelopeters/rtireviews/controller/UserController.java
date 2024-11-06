@@ -26,7 +26,7 @@ public class UserController {
         return new ResponseEntity<>(userService.getUserByEmail(email), HttpStatus.OK);
     }
 
-    @PostMapping("/signup")
+    @PostMapping("/add")
     public ResponseEntity<User> addUser(@RequestBody User user) {
         User userToAdd = userService.addUser(user);
         return new ResponseEntity<>(userToAdd, HttpStatus.CREATED);
