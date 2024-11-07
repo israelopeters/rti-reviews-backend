@@ -8,6 +8,9 @@
         <div th:if="${param.success}">
             Account created successfully.
         </div>
+        <div th:if="${param.error}"> <!-- Recheck -->
+            Invalid input.
+        </div>
 
         <form th:action="@{/signup/save}"
               method="post"
