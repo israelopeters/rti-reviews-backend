@@ -1,6 +1,5 @@
 package com.israelopeters.rtireviews.service;
 
-import com.israelopeters.rtireviews.dto.UserDto;
 import com.israelopeters.rtireviews.model.Role;
 import com.israelopeters.rtireviews.model.User;
 import com.israelopeters.rtireviews.repository.RoleRepository;
@@ -46,14 +45,6 @@ public class UserServiceImpl implements UserService {
         }
         user.setRoles(List.of(role));
         return userRepository.save(user);
-    }
-
-    private UserDto mapToUserDto(User user) {
-        UserDto userDto = new UserDto();
-        userDto.setFirstName(user.getFirstName());
-        userDto.setLastName(user.getLastName());
-        userDto.setEmail(user.getEmail());
-        return userDto;
     }
 
     private Role assignUser() {
