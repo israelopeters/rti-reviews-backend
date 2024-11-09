@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
     public User addUser(User user) {
         user.setDateCreated(LocalDate.now());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        Role role = new Role();
+        Role role = roleRepository.findByName("USER");
         if (role == null) {
             role = assignUser();
         }
