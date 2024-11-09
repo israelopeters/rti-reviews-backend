@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User addUser(User user) {
+    public void addUser(User user) {
         user.setDateCreated(LocalDate.now());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         Role role = roleRepository.findByName("USER");
@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
             role = assignUser();
         }
         user.setRoles(List.of(role));
-        return userRepository.save(user);
+        userRepository.save(user);
     }
 
     private Role assignUser() {
