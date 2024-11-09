@@ -1,4 +1,4 @@
-package com.israelopeters.rtireviews.security;
+package com.israelopeters.rtireviews.service;
 
 import com.israelopeters.rtireviews.model.Role;
 import com.israelopeters.rtireviews.model.User;
