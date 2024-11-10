@@ -44,10 +44,10 @@ public class AuthController {
         }
         if(bindingResult.hasErrors()) {
             model.addAttribute("userForSignup", user);
-            return "/signup";
+            return "signup";
         }
         userService.addUser(user);
-        return "redirect:/signup?success";
+        return "signup/success";
     }
 
     private Boolean isUserExists(User user) {
