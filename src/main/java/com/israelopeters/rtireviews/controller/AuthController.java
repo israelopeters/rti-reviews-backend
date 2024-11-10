@@ -47,7 +47,7 @@ public class AuthController {
             return "signup";
         }
         userService.addUser(user);
-        return "signup/success";
+        return "signup_success";
     }
 
     private Boolean isUserExists(User user) {
