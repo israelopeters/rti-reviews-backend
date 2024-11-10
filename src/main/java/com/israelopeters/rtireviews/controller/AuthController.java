@@ -36,6 +36,11 @@ public class AuthController {
         return "login";
     }
 
+    @GetMapping("/reviews")
+    public String reviews() {
+        return "reviews";
+    }
+
     @PostMapping("/signup/save")
     public String signup(@Valid @ModelAttribute("userForSignup") User user, BindingResult bindingResult, Model model) {
         if(isUserExists(user)) {
