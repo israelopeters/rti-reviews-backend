@@ -16,15 +16,15 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="reviewPost: ${reviewList}">
-                    <td th:text="${reviewPost.title}"></td>
-                    <td th:text="${reviewPost.body}"></td>
-                    <td th:text="${reviewPost.dateTimeCreated}"></td>
+                <tr th:each="review: ${reviewList}">
+                    <td th:text="${review.title}"></td>
+                    <td th:text="${review.body}"></td>
+                    <td th:text="${review.dateTimeCreated}"></td>
                 </tr>
             </tbody>
         </table>
 
-        <p><a th:href="@{/post_review}">Post a new review!</a></p>
+        <p><a th:href="@{/reviews/post}">Post a new review!</a></p>
 
         <form th:action="@{/logout}" method="post">
             <input type="submit" value="Sign Out"/>

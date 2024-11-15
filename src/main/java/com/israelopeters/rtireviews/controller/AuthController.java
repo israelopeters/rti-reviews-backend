@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,14 +48,11 @@ public class AuthController {
     public String reviews(Model model) {
         List<Review> reviewList = new ArrayList<>(reviewService.getAllReviews());
         model.addAttribute("reviewList", reviewList);
-        if(reviewList.isEmpty()) {
-            return "post_review";
-        }
         return "reviews";
     }
 
     @GetMapping("reviews/post")
-    public String reviewPostView(Model model) {
+    public String showReviewPostForm(Model model) {
         Review review = new Review();
         model.addAttribute("reviewPost", review);
         return "post_review";
@@ -77,9 +73,9 @@ public class AuthController {
     }
 
     @PostMapping("/reviews/post/save")
-    public String postReview(@ModelAttribute("reviewPost") Review review, BindingResult bindingResult) {
+    public String postReview(@ModelAttribute("reviewPost") Review review, BindingResult bindingResult, Model model) {
         if(bindingResult.hasErrors()) {
-            return "Binding Error!";
+            return "Error";
         }
         reviewService.addReview(review);
         return "reviews";
