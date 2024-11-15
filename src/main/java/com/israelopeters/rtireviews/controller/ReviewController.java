@@ -1,6 +1,7 @@
 package com.israelopeters.rtireviews.controller;
 
 import com.israelopeters.rtireviews.model.Review;
+import com.israelopeters.rtireviews.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
