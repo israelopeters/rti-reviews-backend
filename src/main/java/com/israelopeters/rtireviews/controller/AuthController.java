@@ -50,9 +50,16 @@ public class AuthController {
         List<Review> reviewList = new ArrayList<>(reviewService.getAllReviews());
         model.addAttribute("reviewList", reviewList);
         if(reviewList.isEmpty()) {
-            return "post_reviews";
+            return "post_review";
         }
         return "reviews";
+    }
+
+    @GetMapping("reviews/post")
+    public String reviewPostView(Model model) {
+        Review review = new Review();
+        model.addAttribute("reviewPost", review);
+        return "post_review";
     }
 
     @PostMapping("/signup/save")
@@ -69,12 +76,11 @@ public class AuthController {
         return "signup_success";
     }
 
-    @PostMapping("/reviews/post")
-    public String postReview(@ModelAttribute("reviewPost") Review review, BindingResult bindingResult, Model model) {
+    @PostMapping("/reviews/post/save")
+    public String postReview(@ModelAttribute("reviewPost") Review review, BindingResult bindingResult) {
         if(bindingResult.hasErrors()) {
-            return "Error";
+            return "Binding Error!";
         }
-        model.addAttribute("reviewPost", review);
         reviewService.addReview(review);
         return "reviews";
     }
