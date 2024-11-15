@@ -7,6 +7,23 @@
     <body>
         <h1>See All Reviews!</h1>
 
+        <table>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Body</th>
+                    <th>Time Posted</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="review: ${reviewList}">
+                    <td th:text="${review.title}"></td>
+                    <td th:text="${review.body}"></td>
+                    <td th:text="${review.dateTimeCreated}"></td>
+                </tr>
+            </tbody>
+        </table>
+
         <form th:action="@{/logout}" method="post">
             <input type="submit" value="Sign Out"/>
         </form>

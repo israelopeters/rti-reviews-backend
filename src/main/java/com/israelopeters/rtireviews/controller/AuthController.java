@@ -47,7 +47,7 @@ public class AuthController {
     @GetMapping("/reviews")
     public String reviews(Model model) {
         List<Review> reviewList = new ArrayList<>(reviewService.getAllReviews());
-        model.addAttribute("reviews", reviewList);
+        model.addAttribute("reviewList", reviewList);
         return "reviews";
     }
 
