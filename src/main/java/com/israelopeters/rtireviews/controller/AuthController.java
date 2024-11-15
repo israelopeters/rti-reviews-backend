@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,6 +64,13 @@ public class AuthController {
         }
         userService.addUser(user);
         return "signup_success";
+    }
+
+    @PostMapping("/reviews/save")
+    public String postReview(@ModelAttribute("reviewPost") Review review) {
+        review.setDateTimeCreated(LocalDateTime.now());
+        reviewService.addReview(review);
+        return "reviews";
     }
 
     private Boolean isUserExists(User user) {
