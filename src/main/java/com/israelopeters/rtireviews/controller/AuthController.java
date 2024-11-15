@@ -49,6 +49,9 @@ public class AuthController {
     public String reviews(Model model) {
         List<Review> reviewList = new ArrayList<>(reviewService.getAllReviews());
         model.addAttribute("reviewList", reviewList);
+        if(reviewList.isEmpty()) {
+            return "post_reviews";
+        }
         return "reviews";
     }
 
