@@ -1,6 +1,8 @@
 package com.israelopeters.rtireviews.controller;
 
+import com.israelopeters.rtireviews.model.Review;
 import com.israelopeters.rtireviews.model.User;
+import com.israelopeters.rtireviews.service.ReviewService;
 import com.israelopeters.rtireviews.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.ArrayList;
+import java.util.List;
+
 // Controller for Spring MVC test purposes
 
 @Controller
@@ -18,6 +23,9 @@ public class AuthController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    ReviewService reviewService;
 
     @GetMapping("/home")
     public String home() {
@@ -37,7 +45,9 @@ public class AuthController {
     }
 
     @GetMapping("/reviews")
-    public String reviews() {
+    public String reviews(Model model) {
+        List<Review> reviewList = new ArrayList<>(reviewService.getAllReviews());
+        model.addAttribute("reviews", reviewList);
         return "reviews";
     }
 
