@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface ReviewService {
     List<Review> getAllReviews();
+    void addReview(Review review);
 }
