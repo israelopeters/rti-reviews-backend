@@ -67,7 +67,10 @@ public class AuthController {
     }
 
     @PostMapping("/reviews/post")
-    public String postReview(@ModelAttribute("reviewPost") Review review, Model model) {
+    public String postReview(@ModelAttribute("reviewPost") Review review, BindingResult bindingResult, Model model) {
+        if(bindingResult.hasErrors()) {
+            return "Error";
+        }
         model.addAttribute("reviewPost", review);
         reviewService.addReview(review);
         return "reviews";

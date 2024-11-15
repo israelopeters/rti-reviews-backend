@@ -16,7 +16,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="review: ${reviewList}">
+                <tr th:each="reviewPost: ${reviewList}">
                     <td th:text="${review.title}"></td>
                     <td th:text="${review.body}"></td>
                     <td th:text="${review.dateTimeCreated}"></td>
