@@ -78,7 +78,7 @@ public class AuthController {
             return "Error";
         }
         reviewService.addReview(review);
-        return "reviews";
+        return "redirect:/reviews"; // Redirect to endpoint instead of template so as to load updated reviews list
     }
 
     private Boolean isUserExists(User user) {
