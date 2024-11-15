@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Post A New Review</title>
+</head>
+<body>
+    <form th:action="@{/reviews/post}"
+          method="post"
+          th:object="${reviewsPost}">
+
+        <ul>
+            <li>
+                <label for="title">Title: </label>
+                <input type="text" id="title" name="title" th:field="*{title}" placeholder="Enter review title"/>
+            </li>
+            <li>
+                <label for="body">Body: </label>
+                <input type="text" id="body" name="body" th:field="*{body}" placeholder="Enter your review here" />
+            </li>
+        </ul>
+        <p class="button">
+            <button type="submit">Post review</button>
+        </p>
+    </form>
+</body>
+</html>

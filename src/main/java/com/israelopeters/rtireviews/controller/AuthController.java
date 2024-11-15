@@ -66,7 +66,7 @@ public class AuthController {
         return "signup_success";
     }
 
-    @PostMapping("/reviews/save")
+    @PostMapping("/reviews/post")
     public String postReview(@ModelAttribute("reviewPost") Review review) {
         review.setDateTimeCreated(LocalDateTime.now());
         reviewService.addReview(review);
