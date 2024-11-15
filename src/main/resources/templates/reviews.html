@@ -24,9 +24,7 @@
             </tbody>
         </table>
 
-        <form th:action="@{/post_review}" method="post">
-            <input type="submit" value="Post Review"
-        </form>
+        <p><a th:href="@{/post_review}">Post a new review!</a></p>
 
         <form th:action="@{/logout}" method="post">
             <input type="submit" value="Sign Out"/>
