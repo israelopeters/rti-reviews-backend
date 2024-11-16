@@ -12,17 +12,17 @@ Also see "Running Locally" below for notes on how to run the application on your
 
 ## Features
 
-### Sign-up / Login Screen
+### Sign-up/Login
 A user can sign up by entering basic details (email, name, country, bio) or using their Google account. The user can log in using an email and a password or through their Google account.
 
 ### Reviews List
-The app contains a list of posted reviews.
+A signed-in user can view a list of posted reviews.
 
 ### Review
-Each review item contains the following: image URI, review title, body text, time stamp of original posting, likes count, comment list, comment count, book title, book author, book genre, book rating, book page count.
+Each review item contains the following: image URI, review title, body text, time stamp of original posting, likes count, comment list, reviewed book genre, and book rating.
 
 ### Profile
-Each user has a profile containing the following details: profile picture, name, country, bio, date created, a list of reviews posted. A profile can be edited: profile picture, name, country, bio.
+Each user has a profile containing the following details: profile picture, name, country, bio, date created, and list of reviews posted. A profile can be edited: profile picture, name, country, bio.
 
 ### Add/Edit/Delete Review
 A new review can be added, and an existing one can be edited or deleted. 
