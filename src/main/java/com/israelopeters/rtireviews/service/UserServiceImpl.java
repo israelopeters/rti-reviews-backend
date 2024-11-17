@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -45,6 +46,22 @@ public class UserServiceImpl implements UserService {
         }
         user.setRoles(List.of(role));
         userRepository.save(user);
+    }
+
+    @Override
+    public void updateUser(Long id, User updatedUser) {
+        Optional<User> existingUser = userRepository.findById(id);
+        if (existingUser.isPresent()) {
+            existingUser = existingUser.map(existingUserTemp -> {
+                existingUserTemp.setFirstName(updatedUser.getFirstName());
+                existingUserTemp.setLastName(updatedUser.getLastName());
+                existingUserTemp.setCountry(updatedUser.getCountry());
+                existingUserTemp.setBio(updatedUser.getBio());
+                existingUserTemp.setEmail(updatedUser.getEmail());
+                existingUserTemp.setRoles(updatedUser.getRoles());
+                return userRepository.save(existingUserTemp);
+            });
+        }
     }
 
     private Role assignUser() {
