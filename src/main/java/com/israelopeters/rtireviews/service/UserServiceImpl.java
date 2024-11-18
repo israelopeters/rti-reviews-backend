@@ -62,6 +62,7 @@ public class UserServiceImpl implements UserService {
                 return userRepository.save(existingUserTemp);
             });
         }
+        // Code for unhappy path
     }
 
     private Role assignUser() {
