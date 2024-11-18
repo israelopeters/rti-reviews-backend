@@ -9,7 +9,7 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Entity(name = "Review")
+@Entity(name = "Reviews")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -32,9 +32,9 @@ public class Review {
     private LocalDateTime dateTimeCreated;
 
     @Enumerated(EnumType.STRING)
-    private List<ReviewTag> tagList;
+    private List<ReviewGenre> genreList;
 
-    public enum ReviewTag {
+    public enum ReviewGenre {
         THRILLER,
         CRIME,
         SELF_HELP,
