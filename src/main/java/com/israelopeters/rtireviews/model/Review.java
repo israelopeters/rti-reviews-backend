@@ -28,6 +28,8 @@ public class Review {
 
     private String imageUri;
 
+    private Long likeCount;
+
     @Column(nullable = false)
     private LocalDateTime dateTimeCreated;
 
