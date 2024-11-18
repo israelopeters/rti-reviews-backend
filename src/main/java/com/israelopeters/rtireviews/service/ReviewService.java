@@ -8,4 +8,5 @@ public interface ReviewService {
     List<Review> getAllReviews();
     void addReview(Review review);
     void editReview(Long id, Review editedReview);
+    void deleteReview(Long id);
 }

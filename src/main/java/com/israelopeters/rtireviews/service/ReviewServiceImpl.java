@@ -41,4 +41,9 @@ public class ReviewServiceImpl implements ReviewService {
         }
         // Code for unhappy path
     }
+
+    @Override
+    public void deleteReview(Long id) {
+        reviewRepository.deleteById(id);
+    }
 }
