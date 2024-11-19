@@ -65,9 +65,24 @@ public class UserServiceImpl implements UserService {
         // Code for unhappy path
     }
 
+    @Override
+    public void deleteUser(Long id) {
+        if (isUserPresent(id)) {
+            User user = userRepository.findById(id).get();
+            userRepository.delete(user);
+        } else {
+            // Add proper error handling
+            System.out.println("User not found!");
+        }
+    }
+
     private Role assignUser() {
         Role role = new Role();
         role.setName("USER");
         return roleRepository.save(role);
+    }
+
+    private boolean isUserPresent(Long userId) {
+        return userRepository.findById(userId).isPresent();
     }
 }

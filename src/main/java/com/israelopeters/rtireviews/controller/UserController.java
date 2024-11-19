@@ -1,5 +1,6 @@
 package com.israelopeters.rtireviews.controller;
 
+import com.israelopeters.rtireviews.model.Review;
 import com.israelopeters.rtireviews.model.User;
 import com.israelopeters.rtireviews.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,5 +37,11 @@ public class UserController {
     public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User updatedUser) {
         userService.updateUser(id, updatedUser);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+
+    @DeleteMapping("/delete{id}")
+    public ResponseEntity<Review> deleteUser(@PathVariable Long id) {
+        userService.deleteUser(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
