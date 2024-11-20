@@ -80,8 +80,8 @@ public class UserServiceImpl implements UserService {
             User user = userRepository.findById(id).get();
             userRepository.delete(user);
         } else {
-            // Add proper error handling
-            System.out.println("User not found!");
+            throw new UserNotFoundException(
+                    String.format("No user found with ID %d", id));
         }
     }
 
