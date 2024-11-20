@@ -67,8 +67,11 @@ public class UserServiceImpl implements UserService {
                 existingUserTemp.setRoles(updatedUser.getRoles());
                 return userRepository.save(existingUserTemp);
             });
+        } else {
+            throw new UserNotFoundException(
+                    String.format("No user found with ID %d", id));
         }
-        // Code for unhappy path
+
     }
 
     @Override
