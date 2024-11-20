@@ -1,5 +1,6 @@
 package com.israelopeters.rtireviews.service;
 
+import com.israelopeters.rtireviews.exception.UserNotFoundException;
 import com.israelopeters.rtireviews.model.Role;
 import com.israelopeters.rtireviews.model.User;
 import com.israelopeters.rtireviews.repository.RoleRepository;
@@ -33,7 +34,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByEmail(String email) {
-        return userRepository.findByEmail(email);
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
+            throw new UserNotFoundException("No user found with this email");
+        } else {
+            return userRepository.findByEmail(email);
+        }
     }
 
     @Override
