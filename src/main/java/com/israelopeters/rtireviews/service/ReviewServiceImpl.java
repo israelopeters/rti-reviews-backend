@@ -1,6 +1,6 @@
 package com.israelopeters.rtireviews.service;
 
-import com.israelopeters.rtireviews.exception.UserNotFoundException;
+import com.israelopeters.rtireviews.exception.ReviewNotFoundException;
 import com.israelopeters.rtireviews.model.Review;
 import com.israelopeters.rtireviews.repository.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,10 +40,9 @@ public class ReviewServiceImpl implements ReviewService {
                 updatedReview.setGenreList(editedReview.getGenreList());
                 return reviewRepository.save(updatedReview);
             });
-        } else {
-            throw new UserNotFoundException(
-                    String.format("No user found with ID: %d", id));
         }
+        throw new ReviewNotFoundException(
+                String.format("No user found with ID: %d", id));
     }
 
     @Override
