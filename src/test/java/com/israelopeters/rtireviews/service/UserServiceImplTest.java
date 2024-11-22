@@ -1,7 +1,9 @@
 package com.israelopeters.rtireviews.service;
 
+import com.israelopeters.rtireviews.exception.UserNotFoundException;
 import com.israelopeters.rtireviews.model.User;
 import com.israelopeters.rtireviews.repository.UserRepository;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -25,6 +27,7 @@ class UserServiceImplTest {
     private UserServiceImpl userServiceImpl;
 
     @Test
+    @DisplayName("getAllUsers() returns empty list")
     void getAllUsersWhenUserTableIsEmpty() {
         //Arrange
         List<User> userListExpected = new ArrayList<>();
@@ -40,6 +43,7 @@ class UserServiceImplTest {
     }
 
     @Test
+    @DisplayName("getAllUsers() returns a single-user list")
     void getAllUsersWhenASingleUserExists() {
         //Arrange
         List<User> userListExpected = new ArrayList<>();
@@ -58,6 +62,7 @@ class UserServiceImplTest {
     }
 
     @Test
+    @DisplayName("getAllUsers() returns a list containing 3 users")
     void getAllUsersWhenMultipleUsersExist() {
         //Arrange
         List<User> userListExpected = new ArrayList<>();
@@ -85,13 +90,21 @@ class UserServiceImplTest {
         assertEquals(userListActual, userListExpected);
     }
 
+    //User enters a correct (existing  in data store) email
     @Test
-    void getUserByEmail() {
+    @DisplayName("getUserByEmail() throws an error when email is not in data store")
+    void getUserByEmailWhenUserNotInDataStore() {
         //Arrange
+        List<User> userList = new ArrayList<>();
+        User user = new User(1L, "Israel", "Peters", "UK", "I am me. Hehe!",
+                "israel@email.com", "password", LocalDate.now(), List.of());
+        userList.add(user);
 
-        //Act
+        when(userRepository.findByEmail("peters@email.com"))
+                .thenThrow(new UserNotFoundException("No user found with email."));
 
-        //Assert
+        //Act and Assert
+        assertThrows(UserNotFoundException.class, () -> userServiceImpl.getUserByEmail("peters@email.com"));
     }
 
     @Test
