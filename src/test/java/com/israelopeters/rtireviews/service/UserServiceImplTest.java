@@ -41,12 +41,48 @@ class UserServiceImplTest {
 
     @Test
     void getAllUsersWhenASingleUserExists() {
+        //Arrange
+        List<User> userListExpected = new ArrayList<>();
+        User user = new User(1L, "Israel", "Peters", "UK", "I am me. Hehe!",
+                "israel@email.com", "password", LocalDate.now(), List.of());
+        userListExpected.add(user);
+        when(userRepository.findAll()).thenReturn(userListExpected);
 
+        //Act
+        List<User> userListActual = userServiceImpl.getAllUsers();
+
+        //Assert
+        assertEquals(userListActual.size(), 1);
+        assertEquals(userListActual.getFirst().getFirstName(), "Israel");
+        assertEquals(userListActual, userListExpected);
     }
 
     @Test
     void getAllUsersWhenMultipleUsersExist() {
-        // 3 records
+        //Arrange
+        List<User> userListExpected = new ArrayList<>();
+        User userOne = new User(1L, "Israel", "Peters", "UK", "I am me. Hehe!",
+                "israel@email.com", "password1", LocalDate.now(), List.of());
+
+        User userTwo = new User(2L, "Samuel", "Adeyeye", "Barbados", "He is he. Hehe!",
+                "samuel@email.com", "password2", LocalDate.now(), List.of());
+
+        User userThree = new User(3L, "David", "Lawal", "USA", "Married man. Hehe!",
+                "david@email.com", "password3", LocalDate.now(), List.of());
+
+        userListExpected.add(userOne);
+        userListExpected.add(userTwo);
+        userListExpected.add(userThree);
+
+        when(userRepository.findAll()).thenReturn(userListExpected);
+
+        //Act
+        List<User> userListActual = userServiceImpl.getAllUsers();
+
+        //Assert
+        assertEquals(userListActual.size(), 3);
+        assertEquals(userListActual.getLast().getFirstName(), "David");
+        assertEquals(userListActual, userListExpected);
     }
 
     @Test

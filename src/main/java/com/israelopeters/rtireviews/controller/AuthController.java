@@ -2,6 +2,7 @@ package com.israelopeters.rtireviews.controller;
 
 import com.israelopeters.rtireviews.model.Review;
 import com.israelopeters.rtireviews.model.User;
+import com.israelopeters.rtireviews.repository.UserRepository;
 import com.israelopeters.rtireviews.service.ReviewService;
 import com.israelopeters.rtireviews.service.UserService;
 import jakarta.validation.Valid;
@@ -26,6 +27,9 @@ public class AuthController {
 
     @Autowired
     ReviewService reviewService;
+
+    @Autowired
+    UserRepository userRepository;
 
     @GetMapping("/home")
     public String home() {
@@ -82,7 +86,7 @@ public class AuthController {
     }
 
     private Boolean isUserExists(User user) {
-        User existingUser = userService.getUserByEmail(user.getEmail());
+        User existingUser = userRepository.findByEmail(user.getEmail());
         return (existingUser != null &&
                 existingUser.getEmail() != null &&
                 !existingUser.getEmail().isEmpty());
