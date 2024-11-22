@@ -90,10 +90,9 @@ class UserServiceImplTest {
         assertEquals(userListActual, userListExpected);
     }
 
-    //User enters a correct (existing  in data store) email
     @Test
     @DisplayName("getUserByEmail() throws an error when email is not in data store")
-    void getUserByEmailWhenUserNotInDataStore() {
+    void getUserByEmailWhenUserIsNotInDataStore() {
         //Arrange
         List<User> userList = new ArrayList<>();
         User user = new User(1L, "Israel", "Peters", "UK", "I am me. Hehe!",
@@ -105,6 +104,21 @@ class UserServiceImplTest {
 
         //Act and Assert
         assertThrows(UserNotFoundException.class, () -> userServiceImpl.getUserByEmail("peters@email.com"));
+    }
+
+    @Test
+    @DisplayName("getUserByEmail() returns a user when email is in data store")
+    void getUserByEmailWhenUserIsInDataStore() {
+        //Arrange
+        User userExpected = new User(1L, "Israel", "Peters", "UK", "I am me. Hehe!",
+                "israel@email.com", "password", LocalDate.now(), List.of());
+        when(userRepository.findByEmail("israel@email.com")).thenReturn(userExpected);
+
+        //Act
+        User userActual =  userRepository.findByEmail("israel@email.com");
+
+        // Assert
+        assertEquals(userActual, userExpected);
     }
 
     @Test
