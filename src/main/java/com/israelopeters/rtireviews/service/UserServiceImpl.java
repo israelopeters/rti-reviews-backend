@@ -94,4 +94,8 @@ public class UserServiceImpl implements UserService {
     private boolean isUserPresent(Long userId) {
         return userRepository.findById(userId).isPresent();
     }
+
+    private boolean isUserPresent(String email) {
+        return userRepository.findByEmail(email).isPresent();
+    }
 }
