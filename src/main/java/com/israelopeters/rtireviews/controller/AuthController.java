@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 // Controller for Spring MVC test purposes
 
@@ -86,11 +87,15 @@ public class AuthController {
     }
 
     private Boolean isUserExists(User user) {
-        User existingUser = userRepository.findByEmail(user.getEmail());
-        return (existingUser != null &&
-                existingUser.getEmail() != null &&
-                !existingUser.getEmail().isEmpty());
+        String email = user.getEmail();
+        Optional<User> existingUserCheck = userRepository.findByEmail(email);
+        Boolean userStatus = null;
+
+        if (existingUserCheck.isPresent()) {
+            User existingUserPresent = existingUserCheck.get();
+            userStatus = (existingUserPresent.getEmail() != null &&
+                    !existingUserPresent.getEmail().isEmpty());
+        }
+        return userStatus;
     }
-
-
 }
