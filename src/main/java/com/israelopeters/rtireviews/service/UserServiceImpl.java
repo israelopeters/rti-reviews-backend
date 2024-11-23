@@ -1,5 +1,6 @@
 package com.israelopeters.rtireviews.service;
 
+import com.israelopeters.rtireviews.exception.UserAlreadyExistsException;
 import com.israelopeters.rtireviews.exception.UserNotFoundException;
 import com.israelopeters.rtireviews.model.Role;
 import com.israelopeters.rtireviews.model.User;
@@ -38,12 +39,15 @@ public class UserServiceImpl implements UserService {
         if (user.isPresent()) {
             return user.get();
         } else {
-            throw new UserNotFoundException("No user found with this email");
+            throw new UserNotFoundException("No user found with this email!");
         }
     }
 
     @Override
     public void addUser(User user) {
+        if (isUserPresent(user.getEmail())) {
+            throw new UserAlreadyExistsException("User already exists!");
+        }
         user.setDateCreated(LocalDate.now());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         Role role = roleRepository.findByName("USER");
