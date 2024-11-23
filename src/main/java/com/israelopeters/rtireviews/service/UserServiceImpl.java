@@ -34,11 +34,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByEmail(String email) {
-        User user = userRepository.findByEmail(email);
-        if (user.getId() == null) {
-            throw new UserNotFoundException("No user found with this email");
+        Optional<User> user = userRepository.findByEmail(email);
+        if (user.isPresent()) {
+            return user.get();
         } else {
-            return user;
+            throw new UserNotFoundException("No user found with this email");
         }
     }
 
