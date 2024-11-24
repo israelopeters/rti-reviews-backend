@@ -12,6 +12,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
@@ -111,10 +112,10 @@ public class UserServiceImplTest {
         //Arrange
         User userExpected = new User(1L, "Israel", "Peters", "UK", "I am me. Hehe!",
                 "israel@email.com", "password", LocalDate.now(), List.of());
-        when(userRepository.findByEmail("israel@email.com")).thenReturn(userExpected);
+        when(userRepository.findByEmail("israel@email.com")).thenReturn(Optional.of(userExpected));
 
         //Act
-        User userActual =  userRepository.findByEmail("israel@email.com");
+        User userActual =  userRepository.findByEmail("israel@email.com").get();
 
         // Assert
         assertEquals(userActual, userExpected);

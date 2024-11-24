@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addUser(User user) {
+    public User addUser(User user) {
         if (isUserPresent(user.getEmail())) {
             throw new UserAlreadyExistsException("User already exists!");
         }
@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService {
             role = assignUser();
         }
         user.setRoles(List.of(role));
-        userRepository.save(user);
+        return userRepository.save(user);
     }
 
     @Override
