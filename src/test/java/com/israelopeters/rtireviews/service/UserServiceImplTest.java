@@ -1,5 +1,6 @@
 package com.israelopeters.rtireviews.service;
 
+import com.israelopeters.rtireviews.exception.UserAlreadyExistsException;
 import com.israelopeters.rtireviews.exception.UserNotFoundException;
 import com.israelopeters.rtireviews.model.User;
 import com.israelopeters.rtireviews.repository.UserRepository;
@@ -122,7 +123,15 @@ public class UserServiceImplTest {
     }
 
     @Test
-    void addUser() {
+    void addUserWhenUserAlreadyExists() {
+        //Arrange
+        User user = new User(1L, "Israel", "Peters", "UK", "I am me. Hehe!",
+                "israel@email.com", "password", LocalDate.now(), List.of());
+
+        when(userRepository.findByEmail(user.getEmail())).thenThrow(new UserAlreadyExistsException("User already exists!"));
+
+        //Act and Assert
+        assertThrows(UserAlreadyExistsException.class, () -> userServiceImpl.addUser(user));
     }
 
     @Test
