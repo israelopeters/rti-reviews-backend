@@ -2,13 +2,16 @@ package com.israelopeters.rtireviews.service;
 
 import com.israelopeters.rtireviews.exception.UserAlreadyExistsException;
 import com.israelopeters.rtireviews.exception.UserNotFoundException;
+import com.israelopeters.rtireviews.model.Role;
 import com.israelopeters.rtireviews.model.User;
+import com.israelopeters.rtireviews.repository.RoleRepository;
 import com.israelopeters.rtireviews.repository.UserRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -24,8 +27,15 @@ public class UserServiceImplTest {
     @Mock
     private UserRepository userRepository;
 
+    @Mock
+    private RoleRepository roleRepository;
+
+    @Mock
+    PasswordEncoder passwordEncoder;
+
     @InjectMocks
     private UserServiceImpl userServiceImpl;
+
 
     @Test
     @DisplayName("getAllUsers() returns empty list")
@@ -132,6 +142,31 @@ public class UserServiceImplTest {
 
         //Act and Assert
         assertThrows(UserAlreadyExistsException.class, () -> userServiceImpl.addUser(user));
+    }
+
+    @Test
+    void addUserWhenUserDoesNotYetExist() {
+        //Arrange
+        User user = new User(1L, "Israel", "Peters", "UK", "I am me. Hehe!",
+                "israel@email.com", "password", LocalDate.now(), List.of());
+
+        Role role = new Role();
+        role.setId(1L);
+        role.setName("USER");
+
+        User userExpected = user;
+        userExpected.setPassword("encoded_password");
+
+        when(passwordEncoder.encode(user.getPassword())).thenReturn("encoded_password");
+        when(roleRepository.findByName("USER")).thenReturn(role);
+        when(userRepository.save(user)).thenReturn(userExpected);
+
+        //Act
+        User userActual = userServiceImpl.addUser(user);
+
+        //Assert
+        assertEquals(userActual, userExpected);
+
     }
 
     @Test
