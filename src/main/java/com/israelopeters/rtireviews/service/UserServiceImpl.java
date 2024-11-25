@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateUser(Long id, User updatedUser) {
+    public User updateUser(Long id, User updatedUser) {
         Optional<User> existingUser = userRepository.findById(id);
         if (existingUser.isPresent()) {
             existingUser = existingUser.map(existingUserTemp -> {
@@ -71,11 +71,11 @@ public class UserServiceImpl implements UserService {
                 existingUserTemp.setRoles(updatedUser.getRoles());
                 return userRepository.save(existingUserTemp);
             });
+            return existingUser.get();
         } else {
             throw new UserNotFoundException(
                     String.format("No user found with ID %d", id));
         }
-
     }
 
     @Override
