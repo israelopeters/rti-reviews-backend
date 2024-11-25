@@ -133,6 +133,7 @@ public class UserServiceImplTest {
     }
 
     @Test
+    @DisplayName("addUserWhenUserAlreadyExists() throws an error indicating user already exists")
     void addUserWhenUserAlreadyExists() {
         //Arrange
         User user = new User(1L, "Israel", "Peters", "UK", "I am me. Hehe!",
@@ -145,6 +146,7 @@ public class UserServiceImplTest {
     }
 
     @Test
+    @DisplayName("addUserWhenUserDoesNotYetExist() returns persisted user with encrypted password and assigned role")
     void addUserWhenUserDoesNotYetExist() {
         //Arrange
         User user = new User(1L, "Israel", "Peters", "UK", "I am me. Hehe!",
@@ -166,11 +168,18 @@ public class UserServiceImplTest {
 
         //Assert
         assertEquals(userActual, userExpected);
-
     }
 
     @Test
-    void updateUser() {
+    @DisplayName("updateUserWhenUserDoesNotExist throws an error indicating user does not exist")
+    void updateUserWhenUserDoesNotExist() {
+        //Arrange
+        User user = new User(1L, "Israel", "Peters", "UK", "I am me. Hehe!",
+                "israel@email.com", "password", LocalDate.now(), List.of());
+        when(userRepository.findById(1L)).thenReturn(Optional.empty());
+
+        //Act and Assert
+        assertThrows(UserNotFoundException.class, () -> userServiceImpl.updateUser(1L, user));
     }
 
     @Test
