@@ -183,6 +183,25 @@ public class UserServiceImplTest {
     }
 
     @Test
+    @DisplayName("updateUserWhenUserExists returns updated user")
+    void updateUserWhenUserExists(){
+        //Arrange
+        User existingUser = new User(1L, "Israel", "Peters", "UK", "I am me. Hehe!",
+                "israel@email.com", "password", LocalDate.now(), List.of());
+        User updatedUser = new User(1L, "Israel", "Peters", "UK", "I am still me.",
+                "israel@email.com", "password", LocalDate.now(), List.of());
+
+        when(userRepository.findById(1L)).thenReturn(Optional.of(existingUser));
+        when(userRepository.save(existingUser)).thenReturn(updatedUser);
+
+        //Act
+        User actualUser = userServiceImpl.updateUser(1L, updatedUser);
+
+        //Assert
+        assertEquals(actualUser, updatedUser);
+    }
+
+    @Test
     void deleteUser() {
     }
 }
