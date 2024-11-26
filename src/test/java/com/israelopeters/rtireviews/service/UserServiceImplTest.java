@@ -202,6 +202,12 @@ public class UserServiceImplTest {
     }
 
     @Test
-    void deleteUser() {
+    @DisplayName(("deleteUserWhenUserDoesNotExist throws an exception of user not found"))
+    void deleteUserWhenUserDoesNotExist() {
+        //Arrange
+        when(userRepository.findById(1L)).thenThrow(UserNotFoundException.class);
+
+        //Act and Assert
+        assertThrows(UserNotFoundException.class, ()-> userServiceImpl.deleteUser(1L));
     }
 }
