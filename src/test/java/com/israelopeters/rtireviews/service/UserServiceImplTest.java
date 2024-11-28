@@ -19,7 +19,8 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.isA;
+import static org.mockito.Mockito.*;
 
 @DataJpaTest
 public class UserServiceImplTest {
@@ -209,5 +210,21 @@ public class UserServiceImplTest {
 
         //Act and Assert
         assertThrows(UserNotFoundException.class, ()-> userServiceImpl.deleteUser(1L));
+    }
+
+    @Test
+    @DisplayName(("deleteUserWhenUserExists returns deleted user"))
+    void deleteUserWhenUserExists() {
+        //Arrange
+        User existingUser = new User(1L, "Israel", "Peters", "UK", "I am me. Hehe!",
+                "israel@email.com", "password", LocalDate.now(), List.of());
+        when(userRepository.findById(1L)).thenReturn(Optional.of(existingUser));
+        doNothing().when(userRepository).deleteById(isA(Long.class));
+
+        //Act
+        userServiceImpl.deleteUser(1L);
+
+        // Assert
+        verify(userRepository, times(1)).deleteById(1L);
     }
 }
