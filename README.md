@@ -2,7 +2,7 @@
 Backend API service to power the RTI Reviews Android app
 
 # RTI Reviews App backend
-The Android app lets users keep and share their book reviews. A user can post a review, view all the reviews on the app, filter reviews by book genre, and like and comment on other users' reviews. Also, a user can delete their own posted reviews. This documentation is for the backend API that will serve the Android application.
+The Android app lets users keep and share their book reviews. A user can post a review, view all the reviews on the app, filter reviews by book genre, and like and comment on other users' reviews. Also, a user can delete their own posted reviews. This documentation is for the backend API that will serve the [Android application](https://github.com/israelopeters/rti-reviews-android).
 
 ## Getting Started
 
