@@ -82,7 +82,7 @@ public class UserServiceImpl implements UserService {
     public void deleteUser(Long id) {
         if (isUserPresent(id)) {
             User user = userRepository.findById(id).get();
-            userRepository.delete(user);
+            userRepository.deleteById(user.getId());
         } else {
             throw new UserNotFoundException(
                     String.format("No user found with ID %d", id));
