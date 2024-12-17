@@ -1,6 +1,5 @@
 package com.israelopeters.rtireviews.config;
 
-import com.israelopeters.rtireviews.service.CustomUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,6 +28,7 @@ public class WebSecurityConfig {
         http
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/home", "/signup", "/signup/save", "signup_success").permitAll()
+                        .requestMatchers("/swagger-ui/**", "swagger-docs").permitAll()
                         .anyRequest().authenticated())
                 .formLogin((form) -> form
                         .loginPage("/login")
