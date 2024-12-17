@@ -3,6 +3,12 @@ package com.israelopeters.rtireviews.controller;
 import com.israelopeters.rtireviews.model.Review;
 import com.israelopeters.rtireviews.model.User;
 import com.israelopeters.rtireviews.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +23,13 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    @Tag(name = "get",
+            description = "All GET methods")
+    @Operation(summary = "Get all users",
+            description = "Get all saved users")
+    @ApiResponse(responseCode = "200",
+            description = "All users found",
+            content = @Content(array = @ArraySchema(schema = @Schema(implementation = User.class))))
     @GetMapping("/")
     public ResponseEntity<List<User>> getAllUsers() {
         return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
