@@ -70,10 +70,21 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    @Tag(name = "update",
+            description = "All UPDATE methods")
+    @Operation(summary = "Update existing user",
+            description = "Update an existing user's details")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "User found for update",
+                    content = @Content(array = @ArraySchema(schema = @Schema(implementation = User.class)))),
+            @ApiResponse(responseCode = "404",
+                    description = "User not found",
+                    content = @Content)})
     @PutMapping("/update")
     public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User updatedUser) {
         userService.updateUser(id, updatedUser);
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/delete{id}")
