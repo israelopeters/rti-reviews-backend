@@ -14,7 +14,7 @@ public class UserExceptionHandler {
     }
 
     @ExceptionHandler
-    public ResponseEntity<Object> handleUserAlreadyExistsException(UserNotFoundException e) {
+    public ResponseEntity<Object> handleUserAlreadyExistsException(UserAlreadyExistsException e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
     }
 
