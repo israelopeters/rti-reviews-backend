@@ -37,8 +37,10 @@ public class UserController {
         return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
     }
 
-    @Tag(name = "get", description = "All GET methods")
-    @Operation(summary = "Get user by email", description = "Get a user by a particular email")
+    @Tag(name = "get",
+            description = "All GET methods")
+    @Operation(summary = "Get user by email",
+            description = "Get a user by a particular email")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
                     description = "User found",
@@ -47,7 +49,9 @@ public class UserController {
                     description = "User not found",
                     content = @Content)})
     @GetMapping("/email")
-    public ResponseEntity<User> getUserByEmail(@RequestParam String email) {
+    public ResponseEntity<User> getUserByEmail(
+            @Parameter(description = "Email of user to find", required = true)
+            @RequestParam String email) {
         return new ResponseEntity<>(userService.getUserByEmail(email), HttpStatus.OK);
     }
 
