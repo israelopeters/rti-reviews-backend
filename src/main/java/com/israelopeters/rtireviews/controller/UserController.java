@@ -4,6 +4,7 @@ import com.israelopeters.rtireviews.model.Review;
 import com.israelopeters.rtireviews.model.User;
 import com.israelopeters.rtireviews.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -50,8 +51,17 @@ public class UserController {
         return new ResponseEntity<>(userService.getUserByEmail(email), HttpStatus.OK);
     }
 
+    @Tag(name = "add",
+            description = "All ADD methods")
+    @Operation(summary = "Add user",
+            description = "Add a new user")
+    @ApiResponse(responseCode = "201",
+            description = "User created",
+            content = {@Content(mediaType = "application/json", schema = @Schema(implementation = User.class))})
     @PostMapping("/add")
-    public ResponseEntity<User> addUser(@RequestBody User user) {
+    public ResponseEntity<User> addUser(
+            @Parameter(description = "User to add to data store", required = true)
+            @RequestBody User user) {
         userService.addUser(user);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
