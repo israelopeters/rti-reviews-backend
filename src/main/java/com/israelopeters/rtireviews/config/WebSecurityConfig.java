@@ -28,7 +28,6 @@ public class WebSecurityConfig {
         http
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/home", "/signup", "/signup/save", "signup_success").permitAll()
-                        .requestMatchers("/swagger-ui/**", "swagger-docs").permitAll()
                         .anyRequest().authenticated())
                 .formLogin((form) -> form
                         .loginPage("/login")

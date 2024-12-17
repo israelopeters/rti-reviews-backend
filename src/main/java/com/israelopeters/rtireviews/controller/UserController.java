@@ -97,7 +97,7 @@ public class UserController {
                     description = "User not found")})
     @DeleteMapping("/delete{id}")
     public void deleteUser(
-            @Parameter(description = "User to delete from data store", required = true)
+            @Parameter(description = "Id of user to delete from data store", required = true)
             @PathVariable Long id) {
         userService.deleteUser(id);
     }
