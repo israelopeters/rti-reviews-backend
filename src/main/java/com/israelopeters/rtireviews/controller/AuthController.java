@@ -89,9 +89,10 @@ public class AuthController {
     private Boolean isUserExists(User user) {
         String email = user.getEmail();
         Optional<User> existingUserCheck = userRepository.findByEmail(email);
-        Boolean userStatus = null;
+        boolean userStatus = false;
 
         if (existingUserCheck.isPresent()) {
+            userStatus = true;
             User existingUserPresent = existingUserCheck.get();
             userStatus = (existingUserPresent.getEmail() != null &&
                     !existingUserPresent.getEmail().isEmpty());
