@@ -70,7 +70,7 @@ http://localhost:9090/swagger-ui.html
 ## Deployment
 
 If you need help with creating a locally persisted Postgres database for the application or deploying it to the cloud, please reach out to me.
-(The API will be deployed to the cloud once it is completed so that the Android client can easily access it.)
+(The API will be deployed to the cloud once it is completed so that the [Android client](https://github.com/israelopeters/rti-reviews-android) can easily access it.)
 
 
 ## Built With
