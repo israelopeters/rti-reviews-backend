@@ -28,13 +28,50 @@ Each user has a profile containing the following details: profile picture, name,
 A new review can be added, and an existing one can be edited or deleted. 
 
 ## Using the API
-Coming soon
-
-### Web Browser Access
-Coming soon
 
 ### Running Locally
-Coming soon
+You can run the application quickly on your local machine with your web browser and an in-memory database. Follow these steps:
+
+
+1. Fork and clone the repo.
+
+2. Open the application.properties file and change the active profile from "dev" to "h2".
+
+```
+spring.profiles.active=h2
+```
+
+3. Clear the username and password from the application-dev.properties file.
+
+```
+spring.datasource.username=
+spring.datasource.password=
+```
+
+4. Run the application and test the home endpoint.
+
+```
+http://localhost:9090/home
+```
+5. Click on the option to sign up and create an account (any simple password will work for now). You will be redirected to the login page.
+
+6. Log in with the credentials you used to create an account in the previous step (email and password).
+
+7. Now that you are authenticated, you can interact with the application (go to next step) or view the API documentation for users (go to Step 9).
+
+8. At this stage, there are no reviews. Try posting a review!
+
+9. To view the Swagger UI documentation for the users section of the API, visit 
+
+```
+http://localhost:9090/swagger-ui.html
+```
+
+## Deployment
+
+If you need help with creating a locally persisted Postgres database for the application or deploying it to the cloud, please reach out to me.
+(The API will be deployed to the cloud once it is completed so that the Android client can easily access it.)
+
 
 ## Built With
 
