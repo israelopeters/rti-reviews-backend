@@ -41,10 +41,10 @@ Coming soon
 * [Spring Boot](https://spring.io/projects/spring-boot) - Java framework used
 * [Spring Security](https://spring.io/projects/spring-security) - Java-based authentication and authorization framework used
 * [Maven](https://maven.apache.org/) - Dependency Management
-* [Docker](https://www.docker.com/) - Used to containerize the application for cloud deployment
-* [AWS RDS](https://aws.amazon.com/rds/) - Used to persist the database on the cloud
-* [AWS Elastic Beanstalk](https://aws.amazon.com/elasticbeanstalk/) - Used to host the application on the cloud
-* [AWS S3](https://aws.amazon.com/s3/) - Used to store app images
+* [Docker](https://www.docker.com/) - To be used to containerize the application for cloud deployment
+* [AWS RDS](https://aws.amazon.com/rds/) - To be used to persist the database on the cloud
+* [AWS Elastic Beanstalk](https://aws.amazon.com/elasticbeanstalk/) - To be used for hosting the application on the cloud
+* [AWS S3](https://aws.amazon.com/s3/) - To be used for storing app images
 * [SwaggerUI/Open API](https://swagger.io/tools/swagger-ui/) - Used to document the API
 
 ## Author
