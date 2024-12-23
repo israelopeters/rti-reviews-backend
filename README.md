@@ -41,7 +41,7 @@ You can run the application quickly on your local machine with your web browser 
 spring.profiles.active=h2
 ```
 
-3. Clear the username and password from the application-dev.properties file.
+3. Clear the username and password from the application-h2.properties file.
 
 ```
 spring.datasource.username=
