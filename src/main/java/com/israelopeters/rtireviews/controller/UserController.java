@@ -80,7 +80,7 @@ public class UserController {
             @ApiResponse(responseCode = "404",
                     description = "User not found",
                     content = @Content)})
-    @PutMapping("/update")
+    @PutMapping("/update/{id}")
     public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User updatedUser) {
         userService.updateUser(id, updatedUser);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -95,7 +95,7 @@ public class UserController {
                     description = "User deleted"),
             @ApiResponse(responseCode = "404",
                     description = "User not found")})
-    @DeleteMapping("/delete{id}")
+    @DeleteMapping("/delete/{id}")
     public void deleteUser(
             @Parameter(description = "Id of user to delete from data store", required = true)
             @PathVariable Long id) {

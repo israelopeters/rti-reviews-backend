@@ -74,4 +74,18 @@ class ReviewControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].id").value(1L))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[1].id").value(2L));
     }
+
+    @Test
+    @DisplayName("GET /{id} returns review with id = id and the OK status code")
+    void getReviewByIdReturnsReviewWithGivenId() throws Exception {
+        // Arrange
+        Review review = new Review(5L, "Review 1", "Review body here!",
+                "image URI 1", 10L, LocalDateTime.now(), List.of());
+        when(reviewServiceImpl.getReviewById(5L)).thenReturn(review);
+
+        // Act and Assert
+        this.mockMvcController.perform(MockMvcRequestBuilders.get("/api/v1/reviews/5"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(5L));
+    }
 }

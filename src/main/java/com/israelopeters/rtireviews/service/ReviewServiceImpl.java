@@ -24,6 +24,16 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
+    public Review getReviewById(Long id) {
+        Optional<Review> existingReview = reviewRepository.findById(id);
+        if (existingReview.isPresent()) {
+            return existingReview.get();
+        }
+        throw new ReviewNotFoundException(
+                String.format("No review found with ID: %d", id));
+    }
+
+    @Override
     public void addReview(Review review) {
         review.setDateTimeCreated(LocalDateTime.now());
         reviewRepository.save(review);
@@ -42,7 +52,7 @@ public class ReviewServiceImpl implements ReviewService {
             });
         }
         throw new ReviewNotFoundException(
-                String.format("No user found with ID: %d", id));
+                String.format("No review found with ID: %d", id));
     }
 
     @Override
