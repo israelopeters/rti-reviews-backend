@@ -42,15 +42,14 @@ class ReviewControllerTest {
     }
 
     @Test
-    @DisplayName("getAllReviews() returns empty list and the OK status code")
+    @DisplayName("GET / returns empty list and the OK status code")
     void getAllReviewsWhenReviewTableIsEmpty() throws Exception {
         // Arrange
         List<Review> reviewsList = List.of();
         when(reviewServiceImpl.getAllReviews()).thenReturn(reviewsList);
 
         //Act and Assert
-        this.mockMvcController.perform(
-                        MockMvcRequestBuilders.get("/api/v1/reviews/"))
+        this.mockMvcController.perform(MockMvcRequestBuilders.get("/api/v1/reviews/"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.size()").value(0));
     }
