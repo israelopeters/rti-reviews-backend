@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -52,5 +53,25 @@ class ReviewControllerTest {
         this.mockMvcController.perform(MockMvcRequestBuilders.get("/api/v1/reviews/"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.size()").value(0));
+    }
+
+    @Test
+    @DisplayName("GET / returns list of reviews and the OK status code")
+    void getAllReviewsWhenReviewTableIsNotEmpty() throws Exception {
+        // Arrange
+        List<Review> reviewsList = List.of(
+                new Review(1L, "Review 1", "Review body here!",
+                        "image URI 1", 10L, LocalDateTime.now(), List.of()),
+                new Review(2L, "Review 2", "Another review body here!",
+                        "image URI 2", 74L, LocalDateTime.now(), List.of())
+        );
+        when(reviewServiceImpl.getAllReviews()).thenReturn(reviewsList);
+
+        //Act and Assert
+        this.mockMvcController.perform(MockMvcRequestBuilders.get("/api/v1/reviews/"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.size()").value(2))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].id").value(1L))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.[1].id").value(2L));
     }
 }
