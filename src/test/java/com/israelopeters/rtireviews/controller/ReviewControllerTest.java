@@ -2,8 +2,6 @@ package com.israelopeters.rtireviews.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.israelopeters.rtireviews.model.Review;
-import com.israelopeters.rtireviews.repository.RoleRepository;
-import com.israelopeters.rtireviews.repository.UserRepository;
 import com.israelopeters.rtireviews.service.ReviewServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -11,8 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -24,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @AutoConfigureMockMvc
-@DataJpaTest
+@SpringBootTest
 class ReviewControllerTest {
     @Mock
     private ReviewServiceImpl reviewServiceImpl;
@@ -44,7 +42,7 @@ class ReviewControllerTest {
     }
 
     @Test
-    @DisplayName("getAllReviews() returns empty list")
+    @DisplayName("getAllReviews() returns empty list and the OK status code")
     void getAllReviewsWhenReviewTableIsEmpty() throws Exception {
         // Arrange
         List<Review> reviewsList = List.of();
