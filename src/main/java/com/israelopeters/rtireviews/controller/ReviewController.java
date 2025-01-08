@@ -39,10 +39,10 @@ public class ReviewController {
     }
 
     @PutMapping("/edit/{id}")
-    public ResponseEntity<Review> editReview(@PathVariable Long id, @RequestBody Review updatedReview) {
+    public ResponseEntity<Void> editReview(@PathVariable Long id, @RequestBody Review updatedReview) {
         try {
-            Review editedReview = reviewService.editReview(id, updatedReview);
-            return new ResponseEntity<>(editedReview, HttpStatus.ACCEPTED);
+            reviewService.editReview(id, updatedReview);
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
         } catch (ReviewNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
