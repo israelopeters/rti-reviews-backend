@@ -40,7 +40,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public void editReview(Long id, Review editedReview) {
+    public Review editReview(Long id, Review editedReview) {
         Optional<Review> existingReview = reviewRepository.findById(id);
 
         if (existingReview.isPresent()) {
@@ -50,6 +50,7 @@ public class ReviewServiceImpl implements ReviewService {
                 updatedReview.setGenreList(editedReview.getGenreList());
                 return reviewRepository.save(updatedReview);
             });
+            return existingReview.get();
         }
         throw new ReviewNotFoundException(
                 String.format("No review found with ID: %d", id));

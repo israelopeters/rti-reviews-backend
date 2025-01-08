@@ -94,7 +94,7 @@ class ReviewControllerTest {
     }
 
     @Test
-    @DisplayName("GET /{id} throws ReviewNotFoundException and the NOT_FOUND status code")
+    @DisplayName("GET /{id} throws ReviewNotFoundException and returns the NOT_FOUND status code")
     void getReviewByIdThrowsReviewNotFoundException() throws Exception {
         // Arrange
         when(reviewServiceImpl.getReviewById(1L)).thenThrow(ReviewNotFoundException.class);
@@ -135,8 +135,8 @@ class ReviewControllerTest {
                         .content(mapper.writeValueAsString(editedReview))
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isAccepted());
-        /* TODO: Test whether reviewService.editReview(id, review) is executed in /edit/{oid} endpoint method
-            May need to make method non-void
+        /* TODO: Test whether reviewService.editReview(id, review) is executed in /edit/{id} endpoint method
+            May need to make method non-void.
          */
     }
 }
