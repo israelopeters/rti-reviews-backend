@@ -41,13 +41,21 @@ public class ReviewController {
 
     @PutMapping("/edit/{id}")
     public ResponseEntity<Review> editReview(@PathVariable Long id, @RequestBody Review updatedReview) {
-        reviewService.editReview(id, updatedReview);
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        try {
+            reviewService.editReview(id, updatedReview);
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        } catch (ReviewNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Review> deleteReview(@PathVariable Long id) {
-        reviewService.deleteReview(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        try {
+            reviewService.deleteReview(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch(ReviewNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }
