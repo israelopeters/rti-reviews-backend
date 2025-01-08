@@ -117,6 +117,26 @@ class ReviewControllerTest {
                         .content(mapper.writeValueAsString(review)) // Hangs on manual JavaTimeModule() registration
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isCreated());
-        // TODO: Test whether the reviewService.addReview(review) line is executed in the /post endpoint method
+        /* TODO: Test whether the reviewService.addReview(review) line is executed in the /post endpoint method;
+            May need to make method non-void
+         */
+    }
+
+    @Test
+    @DisplayName("PUT /edit/{id} for an existing review returns the ACCEPTED status code")
+    void editReviewForExistingReviewReturnsAcceptedStatusCode() throws Exception {
+        // Arrange
+        Review editedReview = new Review(1L, "Edited Review", "Review body here!",
+                "image URI 1", 10L, LocalDateTime.now(), List.of());
+
+        // Act and Assert
+        this.mockMvcController.perform(MockMvcRequestBuilders.put("/api/v1/reviews/edit/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(editedReview))
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isAccepted());
+        /* TODO: Test whether reviewService.editReview(id, review) is executed in /edit/{oid} endpoint method
+            May need to make method non-void
+         */
     }
 }
