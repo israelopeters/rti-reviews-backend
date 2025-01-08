@@ -1,6 +1,7 @@
 package com.israelopeters.rtireviews.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.israelopeters.rtireviews.exception.ReviewNotFoundException;
 import com.israelopeters.rtireviews.model.Review;
 import com.israelopeters.rtireviews.service.ReviewServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,7 +20,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @AutoConfigureMockMvc
@@ -87,5 +87,16 @@ class ReviewControllerTest {
         this.mockMvcController.perform(MockMvcRequestBuilders.get("/api/v1/reviews/5"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(5L));
+    }
+
+    @Test
+    @DisplayName("GET /{id} throws ReviewNotFoundException and the NOT_FOUND status code")
+    void getReviewByIdThrowsReviewNotFoundException() throws Exception {
+        // Arrange
+        when(reviewServiceImpl.getReviewById(1L)).thenThrow(ReviewNotFoundException.class);
+
+        // Act and Assert
+        this.mockMvcController.perform(MockMvcRequestBuilders.get("/api/v1/reviews/1"))
+                .andExpect(MockMvcResultMatchers.status().isNotFound());
     }
 }

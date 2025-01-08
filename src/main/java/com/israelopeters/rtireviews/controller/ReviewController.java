@@ -1,5 +1,6 @@
 package com.israelopeters.rtireviews.controller;
 
+import com.israelopeters.rtireviews.exception.ReviewNotFoundException;
 import com.israelopeters.rtireviews.model.Review;
 import com.israelopeters.rtireviews.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +25,12 @@ public class ReviewController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Review> getReviewById(@PathVariable Long id) {
-        Review review = reviewService.getReviewById(id);
-        return new ResponseEntity<>(review, HttpStatus.OK);
+        try {
+            Review review = reviewService.getReviewById(id);
+            return new ResponseEntity<>(review, HttpStatus.OK);
+        } catch (ReviewNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @PostMapping("/post")
