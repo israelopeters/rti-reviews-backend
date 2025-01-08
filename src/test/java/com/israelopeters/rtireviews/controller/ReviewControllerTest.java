@@ -1,6 +1,7 @@
 package com.israelopeters.rtireviews.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.israelopeters.rtireviews.exception.ReviewNotFoundException;
 import com.israelopeters.rtireviews.model.Review;
 import com.israelopeters.rtireviews.service.ReviewServiceImpl;
@@ -12,6 +13,7 @@ import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -20,7 +22,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @AutoConfigureMockMvc
 @SpringBootTest
@@ -40,6 +42,8 @@ class ReviewControllerTest {
     public void setup(){
         mockMvcController = MockMvcBuilders.standaloneSetup(reviewController).build();
         mapper = new ObjectMapper();
+        // Manually register JavaTimeModule() to make Jackson support Java 8 date time APIs
+        mapper.registerModule(new JavaTimeModule());
     }
 
     @Test
@@ -98,5 +102,21 @@ class ReviewControllerTest {
         // Act and Assert
         this.mockMvcController.perform(MockMvcRequestBuilders.get("/api/v1/reviews/1"))
                 .andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
+
+    @Test
+    @DisplayName("POST /post returns the CREATED status code")
+    void addReviewReturnsCreatedStatusCode() throws Exception {
+        // Arrange
+        Review review = new Review(1L, "Review 1", "Review body here!",
+                "image URI 1", 10L, LocalDateTime.now(), List.of());
+
+        // Act and Assert
+        this.mockMvcController.perform(MockMvcRequestBuilders.post("/api/v1/reviews/post")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(review)) // Hangs on manual JavaTimeModule() registration
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isCreated());
+        // TODO: Test whether the reviewService.addReview(review) line is executed in the /post endpoint method
     }
 }
