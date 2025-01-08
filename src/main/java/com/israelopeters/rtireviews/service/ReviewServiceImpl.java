@@ -57,6 +57,11 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public void deleteReview(Long id) {
-        reviewRepository.deleteById(id);
+        Optional<Review> existingReview = reviewRepository.findById(id);
+        if (existingReview.isPresent()) {
+            reviewRepository.deleteById(id);
+        }
+        throw new ReviewNotFoundException(
+                String.format("No review found with ID: %d", id));
     }
 }
