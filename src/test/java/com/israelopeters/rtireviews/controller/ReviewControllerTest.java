@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.israelopeters.rtireviews.exception.ReviewNotFoundException;
 import com.israelopeters.rtireviews.model.Review;
+import com.israelopeters.rtireviews.model.User;
 import com.israelopeters.rtireviews.service.ReviewServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -38,6 +39,8 @@ class ReviewControllerTest {
 
     private ObjectMapper mapper;
 
+    private final User user = new User();
+
     @BeforeEach
     public void setup(){
         mockMvcController = MockMvcBuilders.standaloneSetup(reviewController).build();
@@ -65,9 +68,9 @@ class ReviewControllerTest {
         // Arrange
         List<Review> reviewsList = List.of(
                 new Review(1L, "Review 1", "Review body here!",
-                        "image URI 1", 10L, LocalDateTime.now(), List.of()),
+                        "image URI 1", 10L, LocalDateTime.now(), List.of(), user),
                 new Review(2L, "Review 2", "Another review body here!",
-                        "image URI 2", 74L, LocalDateTime.now(), List.of())
+                        "image URI 2", 74L, LocalDateTime.now(), List.of(), user)
         );
         when(reviewServiceImpl.getAllReviews()).thenReturn(reviewsList);
 
@@ -84,7 +87,7 @@ class ReviewControllerTest {
     void getReviewByIdReturnsReviewWithGivenId() throws Exception {
         // Arrange
         Review review = new Review(5L, "Review 1", "Review body here!",
-                "image URI 1", 10L, LocalDateTime.now(), List.of());
+                "image URI 1", 10L, LocalDateTime.now(), List.of(), user);
         when(reviewServiceImpl.getReviewById(5L)).thenReturn(review);
 
         // Act and Assert
@@ -109,7 +112,7 @@ class ReviewControllerTest {
     void addReviewReturnsCreatedStatusCode() throws Exception {
         // Arrange
         Review review = new Review(1L, "Review 1", "Review body here!",
-                "image URI 1", 10L, LocalDateTime.now(), List.of());
+                "image URI 1", 10L, LocalDateTime.now(), List.of(), user);
 
         // Act and Assert
         this.mockMvcController.perform(MockMvcRequestBuilders.post("/api/v1/reviews/post")
@@ -127,7 +130,7 @@ class ReviewControllerTest {
     void editReviewForExistingReviewReturnsAcceptedStatusCode() throws Exception {
         // Arrange
         Review editedReview = new Review(1L, "Edited Review", "Review body here!",
-                "image URI 1", 10L, LocalDateTime.now(), List.of());
+                "image URI 1", 10L, LocalDateTime.now(), List.of(), user);
 
         // Act and Assert
         this.mockMvcController.perform(MockMvcRequestBuilders.put("/api/v1/reviews/edit/1")

@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -14,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Review {
+public class Review implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,6 +36,9 @@ public class Review {
 
     @Enumerated(EnumType.STRING)
     private List<ReviewGenre> genreList;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User author;
 
     public enum ReviewGenre {
         THRILLER,

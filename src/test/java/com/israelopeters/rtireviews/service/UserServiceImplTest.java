@@ -2,6 +2,7 @@ package com.israelopeters.rtireviews.service;
 
 import com.israelopeters.rtireviews.exception.UserAlreadyExistsException;
 import com.israelopeters.rtireviews.exception.UserNotFoundException;
+import com.israelopeters.rtireviews.model.Review;
 import com.israelopeters.rtireviews.model.Role;
 import com.israelopeters.rtireviews.model.User;
 import com.israelopeters.rtireviews.repository.RoleRepository;
@@ -14,9 +15,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.isA;
@@ -36,6 +35,8 @@ public class UserServiceImplTest {
 
     @InjectMocks
     private UserServiceImpl userServiceImpl;
+
+    private final Set<Review> reviews = new HashSet<>();
 
 
     @Test
@@ -60,7 +61,7 @@ public class UserServiceImplTest {
         //Arrange
         List<User> userListExpected = new ArrayList<>();
         User user = new User(1L, "Israel", "Peters", "UK", "I am me. Hehe!",
-                "israel@email.com", "password", LocalDate.now(), List.of());
+                "israel@email.com", "password", LocalDate.now(), reviews, List.of());
         userListExpected.add(user);
         when(userRepository.findAll()).thenReturn(userListExpected);
 
@@ -79,13 +80,13 @@ public class UserServiceImplTest {
         //Arrange
         List<User> userListExpected = new ArrayList<>();
         User userOne = new User(1L, "Israel", "Peters", "UK", "I am me. Hehe!",
-                "israel@email.com", "password1", LocalDate.now(), List.of());
+                "israel@email.com", "password1", LocalDate.now(), reviews, List.of());
 
         User userTwo = new User(2L, "Samuel", "Adeyeye", "Barbados", "He is he. Hehe!",
-                "samuel@email.com", "password2", LocalDate.now(), List.of());
+                "samuel@email.com", "password2", LocalDate.now(), reviews, List.of());
 
         User userThree = new User(3L, "David", "Lawal", "USA", "Married man. Hehe!",
-                "david@email.com", "password3", LocalDate.now(), List.of());
+                "david@email.com", "password3", LocalDate.now(), reviews, List.of());
 
         userListExpected.add(userOne);
         userListExpected.add(userTwo);
@@ -108,7 +109,7 @@ public class UserServiceImplTest {
         //Arrange
         List<User> userList = new ArrayList<>();
         User user = new User(1L, "Israel", "Peters", "UK", "I am me. Hehe!",
-                "israel@email.com", "password", LocalDate.now(), List.of());
+                "israel@email.com", "password", LocalDate.now(), reviews, List.of());
         userList.add(user);
 
         when(userRepository.findByEmail("peters@email.com"))
@@ -123,7 +124,7 @@ public class UserServiceImplTest {
     void getUserByEmailWhenUserIsInDataStore() {
         //Arrange
         User userExpected = new User(1L, "Israel", "Peters", "UK", "I am me. Hehe!",
-                "israel@email.com", "password", LocalDate.now(), List.of());
+                "israel@email.com", "password", LocalDate.now(), reviews, List.of());
         when(userRepository.findByEmail("israel@email.com")).thenReturn(Optional.of(userExpected));
 
         //Act
@@ -138,7 +139,7 @@ public class UserServiceImplTest {
     void addUserWhenUserAlreadyExists() {
         //Arrange
         User user = new User(1L, "Israel", "Peters", "UK", "I am me. Hehe!",
-                "israel@email.com", "password", LocalDate.now(), List.of());
+                "israel@email.com", "password", LocalDate.now(), reviews, List.of());
 
         when(userRepository.findByEmail(user.getEmail())).thenThrow(new UserAlreadyExistsException("User already exists!"));
 
@@ -151,7 +152,7 @@ public class UserServiceImplTest {
     void addUserWhenUserDoesNotYetExist() {
         //Arrange
         User user = new User(1L, "Israel", "Peters", "UK", "I am me. Hehe!",
-                "israel@email.com", "password", LocalDate.now(), List.of());
+                "israel@email.com", "password", LocalDate.now(), reviews, List.of());
 
         Role role = new Role();
         role.setId(1L);
@@ -176,7 +177,7 @@ public class UserServiceImplTest {
     void updateUserWhenUserDoesNotExist() {
         //Arrange
         User user = new User(1L, "Israel", "Peters", "UK", "I am me. Hehe!",
-                "israel@email.com", "password", LocalDate.now(), List.of());
+                "israel@email.com", "password", LocalDate.now(), reviews, List.of());
         when(userRepository.findById(1L)).thenReturn(Optional.empty());
 
         //Act and Assert
@@ -188,9 +189,9 @@ public class UserServiceImplTest {
     void updateUserWhenUserExists(){
         //Arrange
         User existingUser = new User(1L, "Israel", "Peters", "UK", "I am me. Hehe!",
-                "israel@email.com", "password", LocalDate.now(), List.of());
+                "israel@email.com", "password", LocalDate.now(), reviews, List.of());
         User updatedUser = new User(1L, "Israel", "Peters", "UK", "I am still me.",
-                "israel@email.com", "password", LocalDate.now(), List.of());
+                "israel@email.com", "password", LocalDate.now(), reviews, List.of());
 
         when(userRepository.findById(1L)).thenReturn(Optional.of(existingUser));
         when(userRepository.save(existingUser)).thenReturn(updatedUser);
@@ -217,7 +218,7 @@ public class UserServiceImplTest {
     void deleteUserWhenUserExists() {
         //Arrange
         User existingUser = new User(1L, "Israel", "Peters", "UK", "I am me. Hehe!",
-                "israel@email.com", "password", LocalDate.now(), List.of());
+                "israel@email.com", "password", LocalDate.now(), reviews, List.of());
         when(userRepository.findById(1L)).thenReturn(Optional.of(existingUser));
         doNothing().when(userRepository).deleteById(isA(Long.class));
 
