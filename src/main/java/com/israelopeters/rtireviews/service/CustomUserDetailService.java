@@ -44,5 +44,7 @@ public class CustomUserDetailService implements UserDetailsService {
                 .map(role -> new SimpleGrantedAuthority(role.getName()))
                 .collect(Collectors.toList());
         return mapRoles;
+
+        // TODO: Based on Line 45, refactor roles class name filed to follow Spring Security conventions
     }
 }
