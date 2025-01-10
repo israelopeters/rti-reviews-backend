@@ -3,6 +3,7 @@ package com.israelopeters.rtireviews.controller;
 import com.israelopeters.rtireviews.exception.ReviewNotFoundException;
 import com.israelopeters.rtireviews.model.Review;
 import com.israelopeters.rtireviews.service.ReviewService;
+import com.israelopeters.rtireviews.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,9 @@ public class ReviewController {
 
     @Autowired
     ReviewService reviewService;
+
+    @Autowired
+    UserService userService;
 
     @GetMapping("/")
     public ResponseEntity<List<Review>> getAllReviews() {
@@ -34,6 +38,7 @@ public class ReviewController {
 
     @PostMapping("/post")
     public ResponseEntity<Void> addReview(@RequestBody Review review) {
+        // TODO: Get authenticated user and set as author of review before saving
         reviewService.addReview(review);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

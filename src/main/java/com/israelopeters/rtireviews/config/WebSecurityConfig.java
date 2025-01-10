@@ -41,7 +41,7 @@ public class WebSecurityConfig {
         return http.build();
     }
 
-    // NOTE: Autowiring this method creates a circular dependency problem that crashes the app
+    // NOTE: Autowiring or setting this method as a bean creates a circular dependency problem that crashes the app
     protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth
                 .userDetailsService(userDetailsService)
