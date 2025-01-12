@@ -2,6 +2,7 @@ package com.israelopeters.rtireviews.controller;
 
 import com.israelopeters.rtireviews.exception.ReviewNotFoundException;
 import com.israelopeters.rtireviews.model.Review;
+import com.israelopeters.rtireviews.model.User;
 import com.israelopeters.rtireviews.service.ReviewService;
 import com.israelopeters.rtireviews.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
