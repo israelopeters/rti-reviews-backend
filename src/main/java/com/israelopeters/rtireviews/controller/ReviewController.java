@@ -2,8 +2,15 @@ package com.israelopeters.rtireviews.controller;
 
 import com.israelopeters.rtireviews.exception.ReviewNotFoundException;
 import com.israelopeters.rtireviews.model.Review;
+import com.israelopeters.rtireviews.model.User;
 import com.israelopeters.rtireviews.service.ReviewService;
 import com.israelopeters.rtireviews.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +28,10 @@ public class ReviewController {
     @Autowired
     UserService userService;
 
+    @Tag(name = "get", description = "All GET methods")
+    @Operation(summary = "Get all reviews", description = "Get all saved reviews")
+    @ApiResponse(responseCode = "200", description = "All reviews found",
+            content = @Content(array = @ArraySchema(schema = @Schema(implementation = Review.class))))
     @GetMapping("/")
     public ResponseEntity<List<Review>> getAllReviews() {
         return new ResponseEntity<>(reviewService.getAllReviews(), HttpStatus.OK);
