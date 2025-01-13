@@ -214,7 +214,7 @@ public class UserServiceImplTest {
     }
 
     @Test
-    @DisplayName(("deleteUserWhenUserExists returns deleted user")) //TODO: Refactor test
+    @DisplayName(("deleteUserWhenUserExists returns deleted user"))
     void deleteUserWhenUserExists() {
         //Arrange
         User existingUser = new User(1L, "Israel", "Peters", "UK", "I am me. Hehe!",
