@@ -60,8 +60,9 @@ public class ReviewServiceImpl implements ReviewService {
         Optional<Review> existingReview = reviewRepository.findById(id);
         if (existingReview.isPresent()) {
             reviewRepository.deleteById(id);
+        } else {
+            throw new ReviewNotFoundException(
+                    String.format("No review found with ID: %d", id));
         }
-        throw new ReviewNotFoundException(
-                String.format("No review found with ID: %d", id));
     }
 }

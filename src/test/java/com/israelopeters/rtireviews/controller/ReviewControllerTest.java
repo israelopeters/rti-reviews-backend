@@ -3,8 +3,10 @@ package com.israelopeters.rtireviews.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.israelopeters.rtireviews.exception.ReviewNotFoundException;
+import com.israelopeters.rtireviews.exception.UserNotFoundException;
 import com.israelopeters.rtireviews.model.Review;
 import com.israelopeters.rtireviews.model.User;
+import com.israelopeters.rtireviews.repository.ReviewRepository;
 import com.israelopeters.rtireviews.service.ReviewServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -20,9 +22,12 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @AutoConfigureMockMvc
@@ -30,6 +35,9 @@ import static org.mockito.Mockito.*;
 class ReviewControllerTest {
     @Mock
     private ReviewServiceImpl reviewServiceImpl;
+
+    @Mock
+    private ReviewRepository reviewRepository;
 
     @InjectMocks
     private ReviewController reviewController;
@@ -141,5 +149,14 @@ class ReviewControllerTest {
         /* TODO: Test whether reviewService.editReview(id, review) is executed in /edit/{id} endpoint method
             May need to make method non-void.
          */
+    }
+
+    @Test
+    @DisplayName(("DEL /delete/{id} returns OK status code"))
+    void deleteReviewWhenReviewExists() throws Exception {
+        //Act and assert
+        this.mockMvcController.perform(MockMvcRequestBuilders.delete("/api/v1/reviews/delete/1"))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+        verify(reviewServiceImpl, times(1)).deleteReview(1L);
     }
 }

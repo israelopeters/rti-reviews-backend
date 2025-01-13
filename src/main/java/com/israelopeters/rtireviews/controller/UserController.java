@@ -96,9 +96,10 @@ public class UserController {
             @ApiResponse(responseCode = "404",
                     description = "User not found")})
     @DeleteMapping("/delete/{id}")
-    public void deleteUser(
+    public ResponseEntity<Void> deleteUser(
             @Parameter(description = "Id of user to delete from data store", required = true)
             @PathVariable Long id) {
         userService.deleteUser(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
