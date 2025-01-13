@@ -3,7 +3,6 @@ package com.israelopeters.rtireviews.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.israelopeters.rtireviews.exception.ReviewNotFoundException;
-import com.israelopeters.rtireviews.exception.UserNotFoundException;
 import com.israelopeters.rtireviews.model.Review;
 import com.israelopeters.rtireviews.model.User;
 import com.israelopeters.rtireviews.repository.ReviewRepository;
@@ -22,10 +21,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
@@ -35,9 +32,6 @@ import static org.mockito.Mockito.*;
 class ReviewControllerTest {
     @Mock
     private ReviewServiceImpl reviewServiceImpl;
-
-    @Mock
-    private ReviewRepository reviewRepository;
 
     @InjectMocks
     private ReviewController reviewController;
