@@ -2,6 +2,7 @@ package com.israelopeters.rtireviews.controller;
 
 import com.israelopeters.rtireviews.exception.ReviewNotFoundException;
 import com.israelopeters.rtireviews.model.Review;
+import com.israelopeters.rtireviews.model.User;
 import com.israelopeters.rtireviews.service.ReviewService;
 import com.israelopeters.rtireviews.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -13,8 +14,13 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -49,6 +55,13 @@ public class ReviewController {
     @PostMapping("/post")
     public ResponseEntity<Void> addReview(@RequestBody Review review) {
         // TODO: Get authenticated user and set as author of review before saving
+        SecurityContext context = SecurityContextHolder.getContext();
+        Authentication authentication = context.getAuthentication();
+        String username = authentication.getName();
+        Object principal = authentication.getPrincipal();
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        User author = userService.getUserByEmail(username);
+        review.setAuthor(author);
         reviewService.addReview(review);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

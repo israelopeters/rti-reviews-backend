@@ -33,7 +33,10 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/login").permitAll()
                         .anyRequest().authenticated())
-                .httpBasic(Customizer.withDefaults());
+                .httpBasic(Customizer.withDefaults())
+                .securityContext((securityContext) -> securityContext
+                        .requireExplicitSave(true)
+                );
 
         return http.build();
     }
@@ -50,10 +53,12 @@ public class WebSecurityConfig {
     }
 
     // NOTE: Autowiring or setting this method as a bean creates a circular dependency problem that crashes the app
-//    protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//        auth
-//                .userDetailsService(userDetailsService)
-//                .passwordEncoder(passwordEncoder());
-//    }
+    protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth
+                .userDetailsService(userDetailsService)
+                .passwordEncoder(passwordEncoder());
+
+        auth.eraseCredentials(false);
+    }
 
 }
