@@ -90,7 +90,7 @@ public class UserServiceImpl implements UserService {
 
     private Role assignUser() {
         Role role = new Role();
-        role.setName("USER");
+        role.setName("ROLE_USER");
         return roleRepository.save(role);
     }
 

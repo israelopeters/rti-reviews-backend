@@ -10,10 +10,12 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.firewall.StrictHttpFirewall;
 
 @Configuration
 @EnableWebSecurity
@@ -36,7 +38,8 @@ public class WebSecurityConfig {
                 .httpBasic(Customizer.withDefaults())
                 .securityContext((securityContext) -> securityContext
                         .requireExplicitSave(true)
-                );
+                )
+                .csrf(AbstractHttpConfigurer::disable);
 
         return http.build();
     }
@@ -50,6 +53,15 @@ public class WebSecurityConfig {
         authenticationProvider.setPasswordEncoder(passwordEncoder);
 
         return new ProviderManager(authenticationProvider);
+    }
+
+    @Bean
+    public StrictHttpFirewall httpFirewall() {
+        StrictHttpFirewall firewall = new StrictHttpFirewall();
+        firewall.setAllowedHeaderNames((header) -> true);
+        firewall.setAllowedHeaderValues((header) -> true);
+        firewall.setAllowedParameterNames((parameter) -> true);
+        return firewall;
     }
 
     // NOTE: Autowiring or setting this method as a bean creates a circular dependency problem that crashes the app

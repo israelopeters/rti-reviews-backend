@@ -13,11 +13,13 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -57,10 +59,15 @@ public class ReviewController {
         // TODO: Get authenticated user and set as author of review before saving
         SecurityContext context = SecurityContextHolder.getContext();
         Authentication authentication = context.getAuthentication();
-        String username = authentication.getName();
+        String username;
         Object principal = authentication.getPrincipal();
-        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails) principal).getUsername();
+        } else {
+            username = principal.toString();
+        }
         User author = userService.getUserByEmail(username);
+
         review.setAuthor(author);
         reviewService.addReview(review);
         return new ResponseEntity<>(HttpStatus.CREATED);
