@@ -41,11 +41,5 @@ public class User implements Serializable {
     // TODO: Line 41 - Refactor reference to Review.author to use Metamodel Generator for better type safety
     private Set<Review> reviews;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "user_roles",
-            joinColumns = { @JoinColumn(name = "user_id", referencedColumnName = "id") },
-            inverseJoinColumns = { @JoinColumn(name = "role_id", referencedColumnName = "id") }
-    )
     private List<Role> roles;
 }
