@@ -3,6 +3,10 @@ package com.israelopeters.rtireviews.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -27,25 +31,29 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/home", "/signup", "/signup/save", "signup_success").permitAll()
+                        .requestMatchers("/login").permitAll()
                         .anyRequest().authenticated())
-                .formLogin((form) -> form
-                        .loginPage("/login")
-                        .usernameParameter("email")
-                        .defaultSuccessUrl("/reviews")
-                        .permitAll())
-                .logout((logout) -> logout
-                        .logoutSuccessUrl("/home")
-                        .permitAll());
+                .httpBasic(Customizer.withDefaults());
 
         return http.build();
     }
 
-    // NOTE: Autowiring or setting this method as a bean creates a circular dependency problem that crashes the app
-    protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .userDetailsService(userDetailsService)
-                .passwordEncoder(passwordEncoder());
+    @Bean
+    public AuthenticationManager authenticationManager(
+            UserDetailsService userDetailsService,
+            PasswordEncoder passwordEncoder) {
+        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+        authenticationProvider.setUserDetailsService(userDetailsService);
+        authenticationProvider.setPasswordEncoder(passwordEncoder);
+
+        return new ProviderManager(authenticationProvider);
     }
+
+    // NOTE: Autowiring or setting this method as a bean creates a circular dependency problem that crashes the app
+//    protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+//        auth
+//                .userDetailsService(userDetailsService)
+//                .passwordEncoder(passwordEncoder());
+//    }
 
 }
