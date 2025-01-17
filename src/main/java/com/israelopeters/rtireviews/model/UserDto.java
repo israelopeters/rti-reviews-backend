@@ -1,11 +1,11 @@
 package com.israelopeters.rtireviews.model;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -18,14 +18,7 @@ public class UserDto {
 
     private String lastName;
 
-    private String country;
-
-    private String bio;
-
-    @Email
-    @NotEmpty
     private String email;
 
-    @NotEmpty
-    private String password;
+    private List<Role> roles;
 }
