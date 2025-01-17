@@ -4,6 +4,7 @@ import com.israelopeters.rtireviews.exception.UserAlreadyExistsException;
 import com.israelopeters.rtireviews.exception.UserNotFoundException;
 import com.israelopeters.rtireviews.model.Role;
 import com.israelopeters.rtireviews.model.User;
+import com.israelopeters.rtireviews.model.UserDto;
 import com.israelopeters.rtireviews.repository.RoleRepository;
 import com.israelopeters.rtireviews.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ public class UserServiceImpl implements UserService {
     PasswordEncoder passwordEncoder;
 
     @Override
-    public List<User> getAllUsers() {
+    public List<UserDto> getAllUsers() {
         List<User> userList = new ArrayList<>(userRepository.findAll());
         return userList;
     }
