@@ -1,5 +1,6 @@
 package com.israelopeters.rtireviews.controller;
 
+import com.israelopeters.rtireviews.dto.ReviewDto;
 import com.israelopeters.rtireviews.exception.ReviewNotFoundException;
 import com.israelopeters.rtireviews.model.Review;
 import com.israelopeters.rtireviews.model.User;
@@ -40,7 +41,7 @@ public class ReviewController {
     @ApiResponse(responseCode = "200", description = "All reviews found",
             content = @Content(array = @ArraySchema(schema = @Schema(implementation = Review.class))))
     @GetMapping("/")
-    public ResponseEntity<List<Review>> getAllReviews() {
+    public ResponseEntity<List<ReviewDto>> getAllReviews() {
         return new ResponseEntity<>(reviewService.getAllReviews(), HttpStatus.OK);
     }
 

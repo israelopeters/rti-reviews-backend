@@ -1,14 +1,18 @@
 package com.israelopeters.rtireviews.dto;
 
 import com.israelopeters.rtireviews.model.Review;
-import com.israelopeters.rtireviews.model.User;
-import jakarta.persistence.*;
-import org.springframework.stereotype.Component;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Component
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class ReviewDto {
 
     private Long id;

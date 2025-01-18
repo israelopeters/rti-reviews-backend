@@ -1,11 +1,12 @@
 package com.israelopeters.rtireviews.service;
 
+import com.israelopeters.rtireviews.dto.ReviewDto;
 import com.israelopeters.rtireviews.model.Review;
 
 import java.util.List;
 
 public interface ReviewService {
-    List<Review> getAllReviews();
+    List<ReviewDto> getAllReviews();
     Review getReviewById(Long id);
     void addReview(Review review);
     void editReview(Long id, Review editedReview);
