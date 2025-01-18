@@ -57,19 +57,6 @@ public class ReviewController {
 
     @PostMapping("/post")
     public ResponseEntity<Void> addReview(@RequestBody Review review) {
-        // TODO: Get authenticated user and set as author of review before saving
-        SecurityContext context = SecurityContextHolder.getContext();
-        Authentication authentication = context.getAuthentication();
-        String username;
-        Object principal = authentication.getPrincipal();
-        if (principal instanceof UserDetails) {
-            username = ((UserDetails) principal).getUsername();
-        } else {
-            username = principal.toString();
-        }
-        User author = userService.getUserByEmail(username);
-
-        review.setAuthor(author);
         reviewService.addReview(review);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

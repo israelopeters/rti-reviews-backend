@@ -2,10 +2,11 @@ package com.israelopeters.rtireviews.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.israelopeters.rtireviews.dto.ReviewDto;
+import com.israelopeters.rtireviews.dto.UserDto;
 import com.israelopeters.rtireviews.exception.ReviewNotFoundException;
 import com.israelopeters.rtireviews.model.Review;
 import com.israelopeters.rtireviews.model.User;
-import com.israelopeters.rtireviews.repository.ReviewRepository;
 import com.israelopeters.rtireviews.service.ReviewServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -16,6 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -33,6 +37,12 @@ class ReviewControllerTest {
     @Mock
     private ReviewServiceImpl reviewServiceImpl;
 
+    @Mock
+    SecurityContext context;
+
+    @Mock
+    Authentication authentication;
+
     @InjectMocks
     private ReviewController reviewController;
 
@@ -42,6 +52,8 @@ class ReviewControllerTest {
     private ObjectMapper mapper;
 
     private final User user = new User();
+
+    private final UserDto userDto = new UserDto();
 
     @BeforeEach
     public void setup(){
@@ -55,8 +67,8 @@ class ReviewControllerTest {
     @DisplayName("GET / returns empty list and the OK status code")
     void getAllReviewsWhenReviewTableIsEmpty() throws Exception {
         // Arrange
-        List<Review> reviewsList = List.of();
-        when(reviewServiceImpl.getAllReviews()).thenReturn(reviewsList);
+        List<ReviewDto> reviewDtoList = List.of();
+        when(reviewServiceImpl.getAllReviews()).thenReturn(reviewDtoList);
 
         //Act and Assert
         this.mockMvcController.perform(MockMvcRequestBuilders.get("/api/v1/reviews/"))
@@ -68,13 +80,13 @@ class ReviewControllerTest {
     @DisplayName("GET / returns list of reviews and the OK status code")
     void getAllReviewsWhenReviewTableIsNotEmpty() throws Exception {
         // Arrange
-        List<Review> reviewsList = List.of(
-                new Review(1L, "Review 1", "Review body here!",
-                        "image URI 1", 10L, LocalDateTime.now(), List.of(), user),
-                new Review(2L, "Review 2", "Another review body here!",
-                        "image URI 2", 74L, LocalDateTime.now(), List.of(), user)
+        List<ReviewDto> reviewDtoList = List.of(
+                new ReviewDto(1L, "Review 1", "Review body here!",
+                        "image URI 1", 10L, LocalDateTime.now(), List.of(), userDto),
+                new ReviewDto(2L, "Review 2", "Another review body here!",
+                        "image URI 2", 74L, LocalDateTime.now(), List.of(), userDto)
         );
-        when(reviewServiceImpl.getAllReviews()).thenReturn(reviewsList);
+        when(reviewServiceImpl.getAllReviews()).thenReturn(reviewDtoList);
 
         //Act and Assert
         this.mockMvcController.perform(MockMvcRequestBuilders.get("/api/v1/reviews/"))

@@ -4,8 +4,13 @@ import com.israelopeters.rtireviews.dto.ReviewDto;
 import com.israelopeters.rtireviews.exception.ReviewNotFoundException;
 import com.israelopeters.rtireviews.model.Mapper;
 import com.israelopeters.rtireviews.model.Review;
+import com.israelopeters.rtireviews.model.User;
 import com.israelopeters.rtireviews.repository.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -19,6 +24,9 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Autowired
     ReviewRepository reviewRepository;
+
+    @Autowired
+    UserService userService;
 
     @Autowired
     Mapper mapper;
@@ -43,6 +51,17 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public void addReview(Review review) {
+        SecurityContext context = SecurityContextHolder.getContext();
+        Authentication authentication = context.getAuthentication();
+        String username;
+        Object principal = authentication.getPrincipal();
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails) principal).getUsername();
+        } else {
+            username = principal.toString();
+        }
+        User author = userService.getUserByEmail(username);
+        review.setAuthor(author);
         review.setDateTimeCreated(LocalDateTime.now());
         reviewRepository.save(review);
     }
