@@ -1,7 +1,7 @@
 package com.israelopeters.rtireviews.service;
 
 import com.israelopeters.rtireviews.model.User;
-import com.israelopeters.rtireviews.model.UserDto;
+import com.israelopeters.rtireviews.dto.UserDto;
 
 import java.util.List;
 

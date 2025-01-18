@@ -1,5 +1,6 @@
-package com.israelopeters.rtireviews.model;
+package com.israelopeters.rtireviews.dto;
 
+import com.israelopeters.rtireviews.model.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

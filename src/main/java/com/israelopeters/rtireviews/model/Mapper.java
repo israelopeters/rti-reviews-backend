@@ -1,5 +1,7 @@
 package com.israelopeters.rtireviews.model;
 
+import com.israelopeters.rtireviews.dto.UserCreationDto;
+import com.israelopeters.rtireviews.dto.UserDto;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

@@ -1,7 +1,7 @@
 package com.israelopeters.rtireviews.controller;
 
 import com.israelopeters.rtireviews.model.User;
-import com.israelopeters.rtireviews.model.UserDto;
+import com.israelopeters.rtireviews.dto.UserDto;
 import com.israelopeters.rtireviews.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
