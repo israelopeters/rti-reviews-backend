@@ -2,6 +2,7 @@ package com.israelopeters.rtireviews.service;
 
 import com.israelopeters.rtireviews.exception.UserAlreadyExistsException;
 import com.israelopeters.rtireviews.exception.UserNotFoundException;
+import com.israelopeters.rtireviews.model.Mapper;
 import com.israelopeters.rtireviews.model.Role;
 import com.israelopeters.rtireviews.model.User;
 import com.israelopeters.rtireviews.model.UserDto;
@@ -16,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static java.util.stream.Collectors.toList;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -28,10 +31,15 @@ public class UserServiceImpl implements UserService {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private Mapper mapper;
+
     @Override
     public List<UserDto> getAllUsers() {
-        List<User> userList = new ArrayList<>(userRepository.findAll());
-        return userList;
+        return userRepository.findAll()
+                .stream()
+                .map(mapper::toUserDto)
+                .collect(toList());
     }
 
     @Override
