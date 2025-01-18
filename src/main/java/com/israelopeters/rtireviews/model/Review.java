@@ -37,7 +37,7 @@ public class Review implements Serializable {
     @Enumerated(EnumType.STRING)
     private List<ReviewGenre> genreList;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private User author;
 
     public enum ReviewGenre {
