@@ -1,6 +1,7 @@
 package com.israelopeters.rtireviews.controller;
 
 import com.israelopeters.rtireviews.model.User;
+import com.israelopeters.rtireviews.model.UserDto;
 import com.israelopeters.rtireviews.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -32,7 +33,7 @@ public class UserController {
             description = "All users found",
             content = @Content(array = @ArraySchema(schema = @Schema(implementation = User.class))))
     @GetMapping("/")
-    public ResponseEntity<List<User>> getAllUsers() {
+    public ResponseEntity<List<UserDto>> getAllUsers() {
         return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
     }
 

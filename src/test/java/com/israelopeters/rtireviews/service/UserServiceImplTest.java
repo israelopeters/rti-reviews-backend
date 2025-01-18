@@ -31,10 +31,12 @@ public class UserServiceImplTest {
     @Mock
     PasswordEncoder passwordEncoder;
 
+    @Mock
+    private Mapper mapper;
+
     @InjectMocks
     private UserServiceImpl userServiceImpl;
 
-    private final Mapper mapper = new Mapper();
 
     private final Set<Review> reviews = new HashSet<>();
 
@@ -43,8 +45,8 @@ public class UserServiceImplTest {
     @DisplayName("getAllUsers() returns empty list")
     void getAllUsersWhenUserTableIsEmpty() {
         //Arrange
-        List<User> userListRepository = new ArrayList<>();
-        List<UserDto> userListExpected = new ArrayList<>();
+        List<User> userListRepository = List.of();
+        List<UserDto> userListExpected = List.of();
         when(userRepository.findAll()).thenReturn(userListRepository);
 
         //Act
@@ -57,15 +59,21 @@ public class UserServiceImplTest {
     }
 
     @Test
-    @DisplayName("getAllUsers() returns a single-user list")
+    @DisplayName("getAllUsers() returns a single-userDto list")
     void getAllUsersWhenASingleUserExists() {
         //Arrange
         List<User> userListRepository = new ArrayList<>();
         List<UserDto> userListExpected = new ArrayList<>();
+
         User user = new User(1L, "Israel", "Peters", "UK", "I am me. Hehe!",
                 "israel@email.com", "password", LocalDate.now(), reviews, List.of());
-        userListExpected.add(mapper.toUserDto(user));
+        UserDto userDto = new UserDto("Israel", "Peters", "israel@email.com", List.of());
+
+        userListRepository.add(user);
+        userListExpected.add(userDto);
+
         when(userRepository.findAll()).thenReturn(userListRepository);
+        when(mapper.toUserDto(user)).thenReturn(userDto);
 
         //Act
         List<UserDto> userListActual = userServiceImpl.getAllUsers();
@@ -77,32 +85,35 @@ public class UserServiceImplTest {
     }
 
     @Test
-    @DisplayName("getAllUsers() returns a list containing 3 users")
+    @DisplayName("getAllUsers() returns a list containing 2 userDtos")
     void getAllUsersWhenMultipleUsersExist() {
         //Arrange
         List<User> userListRepository = new ArrayList<>();
         List<UserDto> userListExpected = new ArrayList<>();
+
         User userOne = new User(1L, "Israel", "Peters", "UK", "I am me. Hehe!",
                 "israel@email.com", "password1", LocalDate.now(), reviews, List.of());
-
         User userTwo = new User(2L, "Samuel", "Adeyeye", "Barbados", "He is he. Hehe!",
                 "samuel@email.com", "password2", LocalDate.now(), reviews, List.of());
 
-        User userThree = new User(3L, "David", "Lawal", "USA", "Married man. Hehe!",
-                "david@email.com", "password3", LocalDate.now(), reviews, List.of());
+        UserDto userDtoOne = new UserDto("Israel", "Peters", "israel@email.com", List.of());
+        UserDto userDtoTwo = new UserDto("Samuel", "Adeyeye", "samuel@email.com", List.of());
 
-        userListExpected.add(mapper.toUserDto(userOne));
-        userListExpected.add(mapper.toUserDto(userTwo));
-        userListExpected.add(mapper.toUserDto(userThree));
+        userListRepository.add(userOne);
+        userListRepository.add(userTwo);
+        userListExpected.add(userDtoOne);
+        userListExpected.add(userDtoTwo);
 
         when(userRepository.findAll()).thenReturn(userListRepository);
+        when(mapper.toUserDto(userOne)).thenReturn(userDtoOne);
+        when(mapper.toUserDto(userTwo)).thenReturn(userDtoTwo);
 
         //Act
         List<UserDto> userListActual = userServiceImpl.getAllUsers();
 
         //Assert
-        assertEquals(userListActual.size(), 3);
-        assertEquals(userListActual.getLast().getFirstName(), "David");
+        assertEquals(userListActual.size(), 2);
+        assertEquals(userListActual.getLast().getFirstName(), "Samuel");
         assertEquals(userListActual, userListExpected);
     }
 

@@ -1,8 +1,11 @@
 package com.israelopeters.rtireviews.model;
 
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 
+@Component
 public class Mapper {
     public UserDto toUserDto(User user) {
         UserDto dto = new UserDto();

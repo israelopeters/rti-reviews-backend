@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
     PasswordEncoder passwordEncoder;
 
     @Autowired
-    private Mapper mapper;
+    Mapper mapper;
 
     @Override
     public List<UserDto> getAllUsers() {
