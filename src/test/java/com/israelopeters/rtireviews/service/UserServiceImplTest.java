@@ -2,9 +2,7 @@ package com.israelopeters.rtireviews.service;
 
 import com.israelopeters.rtireviews.exception.UserAlreadyExistsException;
 import com.israelopeters.rtireviews.exception.UserNotFoundException;
-import com.israelopeters.rtireviews.model.Review;
-import com.israelopeters.rtireviews.model.Role;
-import com.israelopeters.rtireviews.model.User;
+import com.israelopeters.rtireviews.model.*;
 import com.israelopeters.rtireviews.repository.RoleRepository;
 import com.israelopeters.rtireviews.repository.UserRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -36,6 +34,8 @@ public class UserServiceImplTest {
     @InjectMocks
     private UserServiceImpl userServiceImpl;
 
+    private final Mapper mapper = new Mapper();
+
     private final Set<Review> reviews = new HashSet<>();
 
 
@@ -43,11 +43,12 @@ public class UserServiceImplTest {
     @DisplayName("getAllUsers() returns empty list")
     void getAllUsersWhenUserTableIsEmpty() {
         //Arrange
-        List<User> userListExpected = new ArrayList<>();
-        when(userRepository.findAll()).thenReturn(userListExpected);
+        List<User> userListRepository = new ArrayList<>();
+        List<UserDto> userListExpected = new ArrayList<>();
+        when(userRepository.findAll()).thenReturn(userListRepository);
 
         //Act
-        List<User> userListActual = userServiceImpl.getAllUsers();
+        List<UserDto> userListActual = userServiceImpl.getAllUsers();
 
         //Assert
         assertEquals(userListActual.size(), 0);
@@ -59,14 +60,15 @@ public class UserServiceImplTest {
     @DisplayName("getAllUsers() returns a single-user list")
     void getAllUsersWhenASingleUserExists() {
         //Arrange
-        List<User> userListExpected = new ArrayList<>();
+        List<User> userListRepository = new ArrayList<>();
+        List<UserDto> userListExpected = new ArrayList<>();
         User user = new User(1L, "Israel", "Peters", "UK", "I am me. Hehe!",
                 "israel@email.com", "password", LocalDate.now(), reviews, List.of());
-        userListExpected.add(user);
-        when(userRepository.findAll()).thenReturn(userListExpected);
+        userListExpected.add(mapper.toUserDto(user));
+        when(userRepository.findAll()).thenReturn(userListRepository);
 
         //Act
-        List<User> userListActual = userServiceImpl.getAllUsers();
+        List<UserDto> userListActual = userServiceImpl.getAllUsers();
 
         //Assert
         assertEquals(userListActual.size(), 1);
@@ -78,7 +80,8 @@ public class UserServiceImplTest {
     @DisplayName("getAllUsers() returns a list containing 3 users")
     void getAllUsersWhenMultipleUsersExist() {
         //Arrange
-        List<User> userListExpected = new ArrayList<>();
+        List<User> userListRepository = new ArrayList<>();
+        List<UserDto> userListExpected = new ArrayList<>();
         User userOne = new User(1L, "Israel", "Peters", "UK", "I am me. Hehe!",
                 "israel@email.com", "password1", LocalDate.now(), reviews, List.of());
 
@@ -88,14 +91,14 @@ public class UserServiceImplTest {
         User userThree = new User(3L, "David", "Lawal", "USA", "Married man. Hehe!",
                 "david@email.com", "password3", LocalDate.now(), reviews, List.of());
 
-        userListExpected.add(userOne);
-        userListExpected.add(userTwo);
-        userListExpected.add(userThree);
+        userListExpected.add(mapper.toUserDto(userOne));
+        userListExpected.add(mapper.toUserDto(userTwo));
+        userListExpected.add(mapper.toUserDto(userThree));
 
-        when(userRepository.findAll()).thenReturn(userListExpected);
+        when(userRepository.findAll()).thenReturn(userListRepository);
 
         //Act
-        List<User> userListActual = userServiceImpl.getAllUsers();
+        List<UserDto> userListActual = userServiceImpl.getAllUsers();
 
         //Assert
         assertEquals(userListActual.size(), 3);
