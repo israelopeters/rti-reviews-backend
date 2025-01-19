@@ -1,5 +1,6 @@
 package com.israelopeters.rtireviews.service;
 
+import com.israelopeters.rtireviews.dto.UserCreationDto;
 import com.israelopeters.rtireviews.exception.UserAlreadyExistsException;
 import com.israelopeters.rtireviews.exception.UserNotFoundException;
 import com.israelopeters.rtireviews.model.Mapper;
@@ -52,10 +53,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User addUser(User user) {
-        if (isUserPresent(user.getEmail())) {
+    public UserDto addUser(UserCreationDto userCreationDto) {
+        if (isUserPresent(userCreationDto.getEmail())) {
             throw new UserAlreadyExistsException("User already exists!");
         }
+        User user = mapper.toUser(userCreationDto);
         user.setDateCreated(LocalDate.now());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         Role role = roleRepository.findByName("USER");
@@ -63,7 +65,8 @@ public class UserServiceImpl implements UserService {
             role = assignUser();
         }
         user.setRoles(List.of(role));
-        return userRepository.save(user);
+        return mapper.toUserDto(
+                userRepository.save(user));
     }
 
     @Override
