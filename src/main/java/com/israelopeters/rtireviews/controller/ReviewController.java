@@ -38,7 +38,7 @@ public class ReviewController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Review> getReviewById(@PathVariable Long id) {
+    public ResponseEntity<Review> getReviewById(@RequestParam("id") Long id) {
         try {
             Review review = reviewService.getReviewById(id);
             return new ResponseEntity<>(review, HttpStatus.OK);
@@ -53,8 +53,8 @@ public class ReviewController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @PutMapping("/edit/{id}")
-    public ResponseEntity<Void> editReview(@PathVariable Long id, @RequestBody Review updatedReview) {
+    @PutMapping("/edit{id}")
+    public ResponseEntity<Void> editReview(@RequestParam("id") Long id, @RequestBody Review updatedReview) {
         try {
             reviewService.editReview(id, updatedReview);
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
@@ -63,8 +63,8 @@ public class ReviewController {
         }
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteReview(@PathVariable Long id) {
+    @DeleteMapping("/delete{id}")
+    public ResponseEntity<Void> deleteReview(@RequestParam("id") Long id) {
         try {
             reviewService.deleteReview(id);
             return new ResponseEntity<>(HttpStatus.OK);
