@@ -1,5 +1,6 @@
 package com.israelopeters.rtireviews.service;
 
+import com.israelopeters.rtireviews.dto.UserCreationDto;
 import com.israelopeters.rtireviews.dto.UserDto;
 import com.israelopeters.rtireviews.exception.UserAlreadyExistsException;
 import com.israelopeters.rtireviews.exception.UserNotFoundException;
@@ -153,13 +154,14 @@ public class UserServiceImplTest {
     @DisplayName("addUserWhenUserAlreadyExists() throws an error indicating user already exists")
     void addUserWhenUserAlreadyExists() {
         //Arrange
-        User user = new User(1L, "Israel", "Peters", "UK", "I am me. Hehe!",
-                "israel@email.com", "password", LocalDate.now(), reviews, List.of());
+        UserCreationDto userCreationDto = new UserCreationDto("Israel", "Peters",
+                "UK", "I am me. Hehe!","israel@email.com", "password");
 
-        when(userRepository.findByEmail(user.getEmail())).thenThrow(new UserAlreadyExistsException("User already exists!"));
+        when(userRepository.findByEmail(userCreationDto.getEmail()))
+                .thenThrow(new UserAlreadyExistsException("User already exists!"));
 
         //Act and Assert
-        assertThrows(UserAlreadyExistsException.class, () -> userServiceImpl.addUser(user));
+        assertThrows(UserAlreadyExistsException.class, () -> userServiceImpl.addUser(userCreationDto));
     }
 
     @Test
@@ -168,23 +170,27 @@ public class UserServiceImplTest {
         //Arrange
         User user = new User(1L, "Israel", "Peters", "UK", "I am me. Hehe!",
                 "israel@email.com", "password", LocalDate.now(), reviews, List.of());
+        UserCreationDto userCreationDto = new UserCreationDto("Israel", "Peters", "UK",
+                "I am me. Hehe!","israel@email.com", "password");
+        UserDto userDto = new UserDto("Israel", "Peters", "israel@email.com", List.of());
 
         Role role = new Role();
         role.setId(1L);
         role.setName("USER");
 
-        User userExpected = user;
-        userExpected.setPassword("encoded_password");
+        UserDto userDtoExpected = userDto;
 
+        when(mapper.toUser(userCreationDto)).thenReturn(user);
         when(passwordEncoder.encode(user.getPassword())).thenReturn("encoded_password");
         when(roleRepository.findByName("USER")).thenReturn(role);
-        when(userRepository.save(user)).thenReturn(userExpected);
+        when(userRepository.save(user)).thenReturn(user);
+        when(mapper.toUserDto(user)).thenReturn(userDto);
 
         //Act
-        User userActual = userServiceImpl.addUser(user);
+        UserDto userCreationDtoActual = userServiceImpl.addUser(userCreationDto);
 
         //Assert
-        assertEquals(userActual, userExpected);
+        assertEquals(userCreationDtoActual, userDtoExpected);
     }
 
     @Test
