@@ -1,5 +1,6 @@
 package com.israelopeters.rtireviews.controller;
 
+import com.israelopeters.rtireviews.dto.UserCreationDto;
 import com.israelopeters.rtireviews.model.User;
 import com.israelopeters.rtireviews.dto.UserDto;
 import com.israelopeters.rtireviews.service.UserService;
@@ -63,10 +64,10 @@ public class UserController {
             description = "User created",
             content = {@Content(mediaType = "application/json", schema = @Schema(implementation = User.class))})
     @PostMapping("/add")
-    public ResponseEntity<User> addUser(
+    public ResponseEntity<UserDto> addUser(
             @Parameter(description = "User to add to data store", required = true)
-            @RequestBody User user) {
-        userService.addUser(user);
+            @RequestBody UserCreationDto userCreationDto) {
+        userService.addUser(userCreationDto);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
