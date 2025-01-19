@@ -32,9 +32,10 @@ public class Mapper {
         User user = new User();
         user.setFirstName(userCreationDto.getFirstName());
         user.setLastName(userCreationDto.getLastName());
+        user.setCountry(userCreationDto.getCountry());
+        user.setBio(userCreationDto.getBio());
         user.setEmail(userCreationDto.getEmail());
         user.setPassword(userCreationDto.getPassword());
-        user.setRoles(new ArrayList<>());
         user.setReviews(new HashSet<>());
         return user;
     }
