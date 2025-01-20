@@ -1,7 +1,5 @@
 package com.israelopeters.rtireviews.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -43,7 +41,7 @@ public class User implements Serializable {
     // TODO: Line 41 - Refactor reference to Review.author to use Metamodel Generator for better type safety
     private Set<Review> reviews;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_roles",
             joinColumns = { @JoinColumn(name = "user_id", referencedColumnName = "id") },

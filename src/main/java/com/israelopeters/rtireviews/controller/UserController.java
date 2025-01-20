@@ -23,6 +23,10 @@ import java.util.List;
 @RequestMapping("/api/v1/users")
 public class UserController {
 
+    //TODO: Create email verification endpoint
+    //TODO: Create password reset functionality
+    //TODO: Implement user authorization
+
     @Autowired
     UserService userService;
 
