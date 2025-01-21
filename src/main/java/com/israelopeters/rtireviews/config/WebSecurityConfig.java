@@ -34,6 +34,7 @@ public class WebSecurityConfig {
         http
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/login").permitAll()
+                        .requestMatchers("/api/v1/users/delete*").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
                 .securityContext((securityContext) -> securityContext
