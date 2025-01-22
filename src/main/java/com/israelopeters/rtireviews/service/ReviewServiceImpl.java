@@ -70,16 +70,19 @@ public class ReviewServiceImpl implements ReviewService {
     public void editReview(Long id, Review editedReview) {
         Optional<Review> existingReview = reviewRepository.findById(id);
 
-        if (existingReview.isPresent()) {
-            existingReview = existingReview.map(updatedReview -> {
-                updatedReview.setTitle(editedReview.getTitle());
-                updatedReview.setBody(editedReview.getBody());
-                updatedReview.setGenreList(editedReview.getGenreList());
-                return reviewRepository.save(updatedReview);
-            });
+        try {
+            if (existingReview.isPresent()) {
+                existingReview = existingReview.map(updatedReview -> {
+                    updatedReview.setTitle(editedReview.getTitle());
+                    updatedReview.setBody(editedReview.getBody());
+                    updatedReview.setGenreList(editedReview.getGenreList());
+                    return reviewRepository.save(updatedReview);
+                });
+            }
+        } catch (ReviewNotFoundException e) {
+            throw new ReviewNotFoundException(
+                    String.format("No review found with ID: %d", id));
         }
-        throw new ReviewNotFoundException(
-                String.format("No review found with ID: %d", id));
     }
 
     @Override
