@@ -2,7 +2,9 @@ package com.israelopeters.rtireviews.controller;
 
 import com.israelopeters.rtireviews.dto.ReviewDto;
 import com.israelopeters.rtireviews.exception.ReviewNotFoundException;
+import com.israelopeters.rtireviews.exception.UnauthorizedUserAccessException;
 import com.israelopeters.rtireviews.model.Review;
+import com.israelopeters.rtireviews.model.User;
 import com.israelopeters.rtireviews.service.ReviewService;
 import com.israelopeters.rtireviews.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -14,6 +16,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -60,6 +66,8 @@ public class ReviewController {
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         } catch (ReviewNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (UnauthorizedUserAccessException e) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
     }
 

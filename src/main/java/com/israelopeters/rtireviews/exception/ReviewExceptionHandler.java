@@ -12,4 +12,10 @@ public class ReviewExceptionHandler {
     public ResponseEntity<Object> handleReviewNotFoundException(ReviewNotFoundException e) {
         return new  ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler
+    public ResponseEntity<Object> handleUnauthorizedUserAccessException(
+            UnauthorizedUserAccessException e) {
+        return new  ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
+    }
 }

@@ -2,11 +2,14 @@ package com.israelopeters.rtireviews.service;
 
 import com.israelopeters.rtireviews.dto.ReviewDto;
 import com.israelopeters.rtireviews.exception.ReviewNotFoundException;
+import com.israelopeters.rtireviews.exception.UnauthorizedUserAccessException;
 import com.israelopeters.rtireviews.model.Mapper;
 import com.israelopeters.rtireviews.model.Review;
 import com.israelopeters.rtireviews.model.User;
 import com.israelopeters.rtireviews.repository.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -72,6 +75,13 @@ public class ReviewServiceImpl implements ReviewService {
 
         try {
             if (existingReview.isPresent()) {
+                User author = existingReview.get().getAuthor();
+                String username = userService.getAuthenticatedUsername();
+                User authenticetedUser = userService.getUserByEmail(username);
+                if (!authenticetedUser.getEmail().equals(author.getEmail())) {
+                    throw new UnauthorizedUserAccessException("You are not authorized to edit this review.");
+                }
+
                 existingReview = existingReview.map(updatedReview -> {
                     updatedReview.setTitle(editedReview.getTitle());
                     updatedReview.setBody(editedReview.getBody());
