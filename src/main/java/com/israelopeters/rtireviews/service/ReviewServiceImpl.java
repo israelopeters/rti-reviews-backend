@@ -8,8 +8,6 @@ import com.israelopeters.rtireviews.model.Review;
 import com.israelopeters.rtireviews.model.User;
 import com.israelopeters.rtireviews.repository.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;

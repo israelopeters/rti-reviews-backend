@@ -5,7 +5,6 @@ import com.israelopeters.rtireviews.dto.UserCreationDto;
 import com.israelopeters.rtireviews.dto.UserDto;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 
 @Component

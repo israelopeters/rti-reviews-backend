@@ -26,9 +26,6 @@ public class ReviewController {
     @Autowired
     ReviewService reviewService;
 
-    @Autowired
-    UserService userService;
-
     @Tag(name = "get", description = "All GET methods")
     @Operation(summary = "Get all reviews", description = "Get all saved reviews")
     @ApiResponse(responseCode = "200", description = "All reviews found",
