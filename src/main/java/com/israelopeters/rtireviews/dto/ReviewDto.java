@@ -15,8 +15,6 @@ import java.util.List;
 @AllArgsConstructor
 public class ReviewDto {
 
-    private Long id;
-
     private String title;
 
     private String body;
@@ -28,7 +26,5 @@ public class ReviewDto {
     private LocalDateTime dateTimeCreated;
 
     private List<Review.ReviewGenre> genreList;
-
-    private UserDto author;
 
 }

@@ -53,7 +53,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public void addReview(Review review) {
+    public void addReview(ReviewDto reviewDto) {
         SecurityContext context = SecurityContextHolder.getContext();
         Authentication authentication = context.getAuthentication();
         String username;
@@ -64,8 +64,9 @@ public class ReviewServiceImpl implements ReviewService {
             username = principal.toString();
         }
         User author = userService.getUserByEmail(username);
+        Review review = mapper.toReview(reviewDto);
         review.setAuthor(author);
-        review.setDateTimeCreated(LocalDateTime.now());
+        reviewDto.setDateTimeCreated(LocalDateTime.now());
         reviewRepository.save(review);
     }
 

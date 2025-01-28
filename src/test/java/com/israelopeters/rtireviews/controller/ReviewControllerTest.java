@@ -17,8 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -46,8 +44,6 @@ class ReviewControllerTest {
 
     private final User user = new User();
 
-    private final UserDto userDto = new UserDto();
-
     @BeforeEach
     public void setup(){
         mockMvcController = MockMvcBuilders.standaloneSetup(reviewController).build();
@@ -74,10 +70,10 @@ class ReviewControllerTest {
     void getAllReviewsWhenReviewTableIsNotEmpty() throws Exception {
         // Arrange
         List<ReviewDto> reviewDtoList = List.of(
-                new ReviewDto(1L, "Review 1", "Review body here!",
-                        "image URI 1", 10L, LocalDateTime.now(), List.of(), userDto),
-                new ReviewDto(2L, "Review 2", "Another review body here!",
-                        "image URI 2", 74L, LocalDateTime.now(), List.of(), userDto)
+                new ReviewDto("Review 1", "Review body here!",
+                        "image URI 1", 10L, LocalDateTime.now(), List.of()),
+                new ReviewDto("Review 2", "Another review body here!",
+                        "image URI 2", 74L, LocalDateTime.now(), List.of())
         );
         when(reviewServiceImpl.getAllReviews()).thenReturn(reviewDtoList);
 
@@ -85,8 +81,8 @@ class ReviewControllerTest {
         this.mockMvcController.perform(MockMvcRequestBuilders.get("/api/v1/reviews/"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.size()").value(2))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].id").value(1L))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[1].id").value(2L));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].likeCount").value(10L))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.[1].likeCount").value(74L));
     }
 
     @Test
@@ -118,13 +114,13 @@ class ReviewControllerTest {
     @DisplayName("POST /post returns the CREATED status code")
     void addReviewReturnsCreatedStatusCode() throws Exception {
         // Arrange
-        Review review = new Review(1L, "Review 1", "Review body here!",
-                "image URI 1", 10L, LocalDateTime.now(), List.of(), user);
+        ReviewDto reviewDto = new ReviewDto("Review 1", "Review body here!",
+                "image URI 1", 10L, LocalDateTime.now(), List.of());
 
         // Act and Assert
         this.mockMvcController.perform(MockMvcRequestBuilders.post("/api/v1/reviews/post")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(mapper.writeValueAsString(review)) // Hangs on manual JavaTimeModule() registration
+                        .content(mapper.writeValueAsString(reviewDto)) // Hangs on manual JavaTimeModule() registration
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isCreated());
         /* TODO: Test whether the reviewService.addReview(review) line is executed in the /post endpoint method;
@@ -133,14 +129,14 @@ class ReviewControllerTest {
     }
 
     @Test
-    @DisplayName("PUT /edit/{id} for an existing review returns the ACCEPTED status code")
+    @DisplayName("PUT /edit{id} for an existing review returns the ACCEPTED status code")
     void editReviewForExistingReviewReturnsAcceptedStatusCode() throws Exception {
         // Arrange
         Review editedReview = new Review(1L, "Edited Review", "Review body here!",
                 "image URI 1", 10L, LocalDateTime.now(), List.of(), user);
 
         // Act and Assert
-        this.mockMvcController.perform(MockMvcRequestBuilders.put("/api/v1/reviews/edit/1")
+        this.mockMvcController.perform(MockMvcRequestBuilders.put("/api/v1/reviews/edit?id=1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(editedReview))
                         .accept(MediaType.APPLICATION_JSON))
@@ -151,10 +147,10 @@ class ReviewControllerTest {
     }
 
     @Test
-    @DisplayName(("DEL /delete/{id} returns OK status code"))
+    @DisplayName(("DEL /delete{id} returns OK status code"))
     void deleteReviewWhenReviewExists() throws Exception {
         //Act and assert
-        this.mockMvcController.perform(MockMvcRequestBuilders.delete("/api/v1/reviews/delete/1"))
+        this.mockMvcController.perform(MockMvcRequestBuilders.delete("/api/v1/reviews/delete?id=1"))
                 .andExpect(MockMvcResultMatchers.status().isOk());
         verify(reviewServiceImpl, times(1)).deleteReview(1L);
     }

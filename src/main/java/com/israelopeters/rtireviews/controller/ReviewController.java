@@ -4,7 +4,6 @@ import com.israelopeters.rtireviews.dto.ReviewDto;
 import com.israelopeters.rtireviews.exception.ReviewNotFoundException;
 import com.israelopeters.rtireviews.exception.UnauthorizedUserAccessException;
 import com.israelopeters.rtireviews.model.Review;
-import com.israelopeters.rtireviews.model.User;
 import com.israelopeters.rtireviews.service.ReviewService;
 import com.israelopeters.rtireviews.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -16,10 +15,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -44,7 +39,7 @@ public class ReviewController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Review> getReviewById(@RequestParam("id") Long id) {
+    public ResponseEntity<Review> getReviewById(@PathVariable Long id) {
         try {
             Review review = reviewService.getReviewById(id);
             return new ResponseEntity<>(review, HttpStatus.OK);
@@ -54,8 +49,8 @@ public class ReviewController {
     }
 
     @PostMapping("/post")
-    public ResponseEntity<Void> addReview(@RequestBody Review review) {
-        reviewService.addReview(review);
+    public ResponseEntity<Void> addReview(@RequestBody ReviewDto reviewDto) {
+        reviewService.addReview(reviewDto);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

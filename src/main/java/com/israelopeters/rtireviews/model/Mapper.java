@@ -42,14 +42,23 @@ public class Mapper {
 
     public ReviewDto toReviewDto(Review review) {
         ReviewDto dto = new ReviewDto();
-        dto.setId(review.getId());
         dto.setTitle(review.getTitle());
         dto.setBody(review.getBody());
         dto.setImageUri(review.getImageUri());
         dto.setLikeCount(review.getLikeCount());
         dto.setDateTimeCreated(review.getDateTimeCreated());
         dto.setGenreList(review.getGenreList());
-        dto.setAuthor(toUserDto(review.getAuthor()));
         return dto;
+    }
+
+    public Review toReview(ReviewDto reviewDto) {
+        Review review = new Review();
+        review.setTitle(reviewDto.getTitle());
+        review.setBody(reviewDto.getBody());
+        review.setImageUri(reviewDto.getImageUri());
+        review.setLikeCount(reviewDto.getLikeCount());
+        review.setDateTimeCreated(reviewDto.getDateTimeCreated());
+        review.setGenreList(reviewDto.getGenreList());
+        return  review;
     }
 }
