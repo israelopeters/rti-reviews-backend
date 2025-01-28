@@ -48,29 +48,29 @@ spring.datasource.username=
 spring.datasource.password=
 ```
 
-4. Run the application and test the home endpoint.
+4. Run the application and create an account (use [Postman](https://www.postman.com/downloads/)).
 
 ```
-http://localhost:9090/home
+http://localhost:9090/api/v1/users/add
 ```
-5. Click on the option to sign up and create an account (any simple password will work for now). You will be redirected to the login page.
+5. Log in with the credentials you used to create an account in the previous step (email and password).
 
-6. Log in with the credentials you used to create an account in the previous step (email and password).
+6. Now that you are authenticated, you can interact with the API. But first, view the API documentation to see how (next step).
 
-7. Now that you are authenticated, you can interact with the application (go to next step) or view the API documentation for users (go to Step 9).
-
-8. At this stage, there are no reviews. Try posting a review!
-
-9. To view the Swagger UI documentation for the users section of the API, visit 
+7. To view the Swagger UI/OpenAPI documentation, visit the URL below in your browser.
 
 ```
-http://localhost:9090/swagger-ui.html
+http://localhost:9090/api/v1/docs
 ```
+
+8. At this stage, there are no reviews (you are using an in-memory database (H2)). Try posting a review and trying the other endpoints!
+
 
 ## Deployment
 
 If you need help with creating a locally persisted Postgres database for the application or deploying it to the cloud, please reach out to me.
-(The API will be deployed to the cloud once it is completed so that the [Android client](https://github.com/israelopeters/rti-reviews-android) can easily access it.)
+(The API has been deployed to the cloud and available only to the [Android client](https://github.com/israelopeters/rti-reviews-android). 
+Please reach out if you would like to interact with the cloud instance so I can share the endpoint.)
 
 
 ## Built With
@@ -78,9 +78,9 @@ If you need help with creating a locally persisted Postgres database for the app
 * [Spring Boot](https://spring.io/projects/spring-boot) - Java framework used
 * [Spring Security](https://spring.io/projects/spring-security) - Java-based authentication and authorization framework used
 * [Maven](https://maven.apache.org/) - Dependency Management
-* [Docker](https://www.docker.com/) - To be used to containerize the application for cloud deployment
-* [AWS RDS](https://aws.amazon.com/rds/) - To be used to persist the database on the cloud
-* [AWS Elastic Beanstalk](https://aws.amazon.com/elasticbeanstalk/) - To be used for hosting the application on the cloud
+* [Docker](https://www.docker.com/) - Used to containerize the application for cloud deployment
+* [AWS RDS](https://aws.amazon.com/rds/) - Used to persist the database on the cloud
+* [AWS Elastic Beanstalk](https://aws.amazon.com/elasticbeanstalk/) - Used for hosting the application on the cloud
 * [AWS S3](https://aws.amazon.com/s3/) - To be used for storing app images
 * [SwaggerUI/Open API](https://swagger.io/tools/swagger-ui/) - Used to document the API
 
