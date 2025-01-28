@@ -69,9 +69,9 @@ class ReviewControllerTest {
         // Arrange
         List<ReviewDto> reviewDtoList = List.of(
                 new ReviewDto("Review 1", "Review body here!",
-                        "image URI 1", 10L, LocalDateTime.now(), List.of()),
+                        "image URI 1", 10L, List.of()),
                 new ReviewDto("Review 2", "Another review body here!",
-                        "image URI 2", 74L, LocalDateTime.now(), List.of())
+                        "image URI 2", 74L, List.of())
         );
         when(reviewServiceImpl.getAllReviews()).thenReturn(reviewDtoList);
 
@@ -113,7 +113,7 @@ class ReviewControllerTest {
     void addReviewReturnsCreatedStatusCode() throws Exception {
         // Arrange
         ReviewDto reviewDto = new ReviewDto("Review 1", "Review body here!",
-                "image URI 1", 10L, LocalDateTime.now(), List.of());
+                "image URI 1", 10L, List.of());
 
         // Act and Assert
         this.mockMvcController.perform(MockMvcRequestBuilders.post("/api/v1/reviews/post")

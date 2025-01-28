@@ -23,8 +23,6 @@ public class ReviewDto {
 
     private Long likeCount;
 
-    private LocalDateTime dateTimeCreated;
-
     private List<Review.ReviewGenre> genreList;
 
 }

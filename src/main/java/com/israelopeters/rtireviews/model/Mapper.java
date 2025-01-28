@@ -45,7 +45,6 @@ public class Mapper {
         dto.setBody(review.getBody());
         dto.setImageUri(review.getImageUri());
         dto.setLikeCount(review.getLikeCount());
-        dto.setDateTimeCreated(review.getDateTimeCreated());
         dto.setGenreList(review.getGenreList());
         return dto;
     }
@@ -56,7 +55,6 @@ public class Mapper {
         review.setBody(reviewDto.getBody());
         review.setImageUri(reviewDto.getImageUri());
         review.setLikeCount(reviewDto.getLikeCount());
-        review.setDateTimeCreated(reviewDto.getDateTimeCreated());
         review.setGenreList(reviewDto.getGenreList());
         return  review;
     }

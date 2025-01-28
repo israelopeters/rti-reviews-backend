@@ -64,7 +64,7 @@ public class ReviewServiceImpl implements ReviewService {
         User author = userService.getUserByEmail(username);
         Review review = mapper.toReview(reviewDto);
         review.setAuthor(author);
-        reviewDto.setDateTimeCreated(LocalDateTime.now());
+        review.setDateTimeCreated(LocalDateTime.now());
         reviewRepository.save(review);
     }
 
