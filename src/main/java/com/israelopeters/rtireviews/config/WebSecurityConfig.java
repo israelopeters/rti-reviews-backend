@@ -33,7 +33,10 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/api/v1/users/add", "/api/v1/docs", "/api/v1/swagger-ui/*").permitAll()
+                        .requestMatchers(
+                                "/api/v1/users/add", "/api/v1/docs",
+                                "/api/v1/swagger-ui/*", "/v3/api-docs/*", "/v3/api-docs"
+                        ).permitAll()
                         .requestMatchers("/api/v1/users/delete*").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
