@@ -75,19 +75,31 @@ with the cloud instance, please use the endpoint below:
 ```
 http://rtireviews-api-env.eba-wp43m9p3.eu-west-2.elasticbeanstalk.com
 ```
-For example, type the URL below in any browser (yes, without running the app locally) to view the Swagger UI/OpenAPI documentation. 
-Use the login details below the URL to access the API when you are requested to sign in.
+For example, type the URL below in any browser (yes, without running the app locally) to view the Swagger UI/OpenAPI documentation.
 
 ```
 http://rtireviews-api-env.eba-wp43m9p3.eu-west-2.elasticbeanstalk.com/api/v1/docs
 ```
 
-Login details: 
+To create an account that you can use to interact with the API endpoints, visit the following URL, using the JSON body 
+format sampled underneath (see more details in the API docs above):
 
 ```
-Username: ohisumoru@email.com
-Password: my-password
+http://rtireviews-api-env.eba-wp43m9p3.eu-west-2.elasticbeanstalk.com/api/v1/users/add
 ```
+
+```
+{
+    "firstName": "Israel",
+    "lastName": "Peters",
+    "country": "United Kingdom",
+    "bio": "Well, I love reading.",
+    "email": "israelopeters@gmail.com",
+    "password": "my_password"
+}
+```
+
+Note that email and password validation have not been implemented.
 
 
 ## Built With
