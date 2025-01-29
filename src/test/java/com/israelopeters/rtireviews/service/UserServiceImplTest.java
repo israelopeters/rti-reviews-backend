@@ -165,7 +165,7 @@ public class UserServiceImplTest {
     }
 
     @Test
-    @DisplayName("addUserWhenUserDoesNotYetExist() returns persisted user with encrypted password and assigned role")
+    @DisplayName("addUserWhenUserDoesNotYetExist() returns userDto mapped from persisted user")
     void addUserWhenUserDoesNotYetExist() {
         //Arrange
         User user = new User(1L, "Israel", "Peters", "UK", "I am me. Hehe!",
@@ -176,14 +176,15 @@ public class UserServiceImplTest {
 
         Role role = new Role();
         role.setId(1L);
-        role.setName("USER");
+        role.setName("ROLE_USER");
 
         UserDto userDtoExpected = userDto;
 
         when(mapper.toUser(userCreationDto)).thenReturn(user);
         when(passwordEncoder.encode(user.getPassword())).thenReturn("encoded_password");
-        when(roleRepository.findByName("USER")).thenReturn(role);
+        when(roleRepository.findByName("ROLE_USER")).thenReturn(role);
         when(userRepository.save(user)).thenReturn(user);
+        when(userServiceImpl.addUser(userCreationDto)).thenReturn(userDtoExpected);
         when(mapper.toUserDto(user)).thenReturn(userDto);
 
         //Act

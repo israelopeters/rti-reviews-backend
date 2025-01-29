@@ -76,7 +76,7 @@ with the cloud instance, please use the endpoint below:
 http://rtireviews-api-env.eba-wp43m9p3.eu-west-2.elasticbeanstalk.com
 ```
 For example, type the URL below in any browser (yes, without running the app locally) to view the Swagger UI/OpenAPI documentation. 
-Use the login details below the URL to access the API.
+Use the login details below the URL to access the API when you are requested to sign in.
 
 ```
 http://rtireviews-api-env.eba-wp43m9p3.eu-west-2.elasticbeanstalk.com/api/v1/docs
