@@ -69,8 +69,25 @@ http://localhost:9090/api/v1/docs
 ## Deployment
 
 If you need help with creating a locally persisted Postgres database for the application or deploying it to the cloud, please reach out to me.
-(The API has been deployed to the cloud and available only to the [Android client](https://github.com/israelopeters/rti-reviews-android). 
-Please reach out if you would like to interact with the cloud instance so I can share the endpoint.)
+The API has been deployed to the cloud for easy access by the [Android client](https://github.com/israelopeters/rti-reviews-android). To interact 
+with the cloud instance, please use the endpoint below:
+
+```
+http://rtireviews-api-env.eba-wp43m9p3.eu-west-2.elasticbeanstalk.com
+```
+For example, type the URL below in any browser (yes, without running the app locally) to view the Swagger UI/OpenAPI documentation. 
+Use the login details below the URL to access the API.
+
+```
+http://rtireviews-api-env.eba-wp43m9p3.eu-west-2.elasticbeanstalk.com/api/v1/docs
+```
+
+Login details: 
+
+```
+Username: ohisumoru@email.com
+Password: my-password
+```
 
 
 ## Built With
@@ -79,7 +96,7 @@ Please reach out if you would like to interact with the cloud instance so I can 
 * [Spring Security](https://spring.io/projects/spring-security) - Java-based authentication and authorization framework used
 * [Maven](https://maven.apache.org/) - Dependency Management
 * [Docker](https://www.docker.com/) - Used to containerize the application for cloud deployment
-* [AWS RDS](https://aws.amazon.com/rds/) - Used to persist the database on the cloud
+* [AWS RDS](https://aws.amazon.com/rds/) - Used to host the database on the cloud
 * [AWS Elastic Beanstalk](https://aws.amazon.com/elasticbeanstalk/) - Used for hosting the application on the cloud
 * [AWS S3](https://aws.amazon.com/s3/) - To be used for storing app images
 * [SwaggerUI/Open API](https://swagger.io/tools/swagger-ui/) - Used to document the API

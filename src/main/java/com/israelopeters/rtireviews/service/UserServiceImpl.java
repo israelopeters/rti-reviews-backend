@@ -64,9 +64,9 @@ public class UserServiceImpl implements UserService {
         User user = mapper.toUser(userCreationDto);
         user.setDateCreated(LocalDate.now());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        Role role = roleRepository.findByName("USER");
+        Role role = roleRepository.findByName("ROLE_USER");
         if (role == null) {
-            role = assignUser();
+            role = assignRole();
         }
         user.setRoles(List.of(role));
         return mapper.toUserDto(
@@ -102,7 +102,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    private Role assignUser() {
+    private Role assignRole() {
         Role role = new Role();
         role.setName("ROLE_USER");
         return roleRepository.save(role);
