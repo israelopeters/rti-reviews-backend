@@ -87,15 +87,15 @@ format sampled underneath (see more details in the API docs above):
 ```
 http://rtireviews-api-env.eba-wp43m9p3.eu-west-2.elasticbeanstalk.com/api/v1/users/add
 ```
-
+Modify the field values accordingly (i.e., replace the given personal details with any of your choice).
 ```
 {
     "firstName": "Israel",
     "lastName": "Peters",
     "country": "United Kingdom",
     "bio": "Well, I love reading.",
-    "email": "israelopeters@gmail.com",
-    "password": "my_password"
+    "email": "israel@email.com",
+    "password": "israel_password"
 }
 ```
 
