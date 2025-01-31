@@ -1,6 +1,7 @@
 package com.israelopeters.rtireviews.controller;
 
 import com.israelopeters.rtireviews.dto.UserCreationDto;
+import com.israelopeters.rtireviews.model.Mapper;
 import com.israelopeters.rtireviews.model.User;
 import com.israelopeters.rtireviews.dto.UserDto;
 import com.israelopeters.rtireviews.service.UserService;
@@ -30,6 +31,9 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    Mapper mapper;
+
     @Tag(name = "get",
             description = "All GET methods")
     @Operation(summary = "Get all users",
@@ -54,10 +58,13 @@ public class UserController {
                     description = "User not found",
                     content = @Content)})
     @GetMapping("/email")
-    public ResponseEntity<User> getUserByEmail(
+    public ResponseEntity<UserDto> getUserByEmail(
             @Parameter(description = "Email of user to find", required = true)
             @RequestParam String email) {
-        return new ResponseEntity<>(userService.getUserByEmail(email), HttpStatus.OK);
+        return new ResponseEntity<>(
+                mapper.toUserDto(
+                        userService.getUserByEmail(email)),
+                HttpStatus.OK);
     }
 
     @Tag(name = "add",
