@@ -6,8 +6,8 @@ The Android app lets users keep and share their book reviews. A user can post a 
 
 ## Getting Started
 
-For comprehensive documentation on the API and its endpoints, please see the SwaggerUI page here: (coming soon). 
-Also see "Running Locally" below for notes on how to run the application on your local machine for testing purposes.
+For comprehensive documentation on the API and its endpoints, please see the SwaggerUI page (go to Step 7 of "Running Locally"). 
+The "Running Locally" section also details how to run the application on your local machine for testing purposes.
 
 
 ## Features
